@@ -4,7 +4,7 @@
      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nexmotion.sync.SyncMapper">
 
-    <resultMap id="getchgdate" type="com.nexmotion.sync.common">
+    <resultMap id="getchgdate" type="com.nexmotion.sync.SyncVO">
         <result column= "chgstartdate" property= "chgstartdate" />
         <result column= "chgenddate" property= "chgenddate" />
     </resultMap>
@@ -16,7 +16,7 @@
         FROM syncdata
     </select>
 
-    <update id="updateChgDate" parameterType="com.nexmotion.Sync.sync">
+    <update id="updateChgDate" parameterType="com.nexmotion.sync.SyncVO">
         /*ManagerMapper.updateChgDate Query*/
         UPDATE syncdata
            SET chgstartdate = #{enddate}

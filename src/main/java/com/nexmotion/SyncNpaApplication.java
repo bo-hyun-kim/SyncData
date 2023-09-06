@@ -19,15 +19,22 @@ public class SyncNpaApplication implements CommandLineRunner {
 	@Autowired
 	private SyncData syncData;
 
+	@Autowired
+	private UserRequester userRequester;
+
+	@Autowired
+	private OrganizationRequester organizationRequester;
+
 	public static void main(String[] args) {
 		SpringApplication.run(SyncNpaApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) {
+
 		try {
 			syncData.sync();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			LOGGER.error("ERROR_sync()", e);
 		}
 
@@ -40,5 +47,28 @@ public class SyncNpaApplication implements CommandLineRunner {
 //			System.err.println("사용자정보 동기화 실패!");
 //			return;
 //		}
+
 	}
+//	@Transactional
+//	public void sync() throws Exception {
+//		SyncVO syncvo = new SyncVO();
+//		List<SyncVO> dateInfo = new ArrayList<>();
+//		dateInfo = syncService.getChgDate();
+//
+//		LocalDateTime startDt = dateInfo.get(0).getChgstartdate();
+//
+//		if (startDt == null) {
+//			LOGGER.info("truncate all tables");
+//			syncService.truncateAccount();
+//			syncService.truncateOraganization();
+//			startDt = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
+//		}
+//		LocalDateTime endDt = LocalDateTime.now();
+//		organizationRequester.run(startDt, endDt);
+//		userRequester.run(startDt, endDt);
+////		organizationSync(startDt, endDt);
+////		userSync(startDt, endDt);
+//		syncvo.setChgenddate(endDt);
+//		syncService.updateChgDate(syncvo);
+//	}
 }

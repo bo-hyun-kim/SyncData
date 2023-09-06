@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -19,7 +18,7 @@ public class SyncData {
     private final Logger LOGGER = LoggerFactory.getLogger(SyncData.class);
 
     @Autowired
-    SyncService syncService;
+    private SyncService syncService;
 
     @Autowired
     private UserRequester userRequester;
@@ -30,8 +29,8 @@ public class SyncData {
     @Transactional
     public void sync() throws Exception {
 
-        Sync sync = new Sync();
-        List<Sync> dateInfo = new ArrayList<>();
+        SyncVO sync = new SyncVO();
+        List<SyncVO> dateInfo = new ArrayList<>();
         dateInfo = syncService.getChgDate();
 
         LocalDateTime startDt = dateInfo.get(0).getChgstartdate();

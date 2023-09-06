@@ -13,12 +13,12 @@ public class SyncService implements SyncMapper{
     SyncMapper syncMapper;
 
     @Override
-    public List<Sync> getChgDate() throws SQLException {
+    public List<SyncVO> getChgDate() throws SQLException {
         return syncMapper.getChgDate();
     }
 
     @Override
-    public void updateChgDate(Sync sync) throws SQLException {
+    public void updateChgDate(SyncVO sync) throws SQLException {
         syncMapper.updateChgDate(sync);
     }
 
