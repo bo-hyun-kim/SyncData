@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nexmotion.viGvofMs.ViGvofMsMapper">
+
+  <insert id="insertViGvofMs" parameterType="java.util.List">
+     /* ViGvofMsMapper.insertViGvofMs */
+     INSERT IGNORE
+       INTO VI_GVOF_MS
+           (gvofcode
+           ,gvofname
+           ,hgvofcode
+           ,useyn
+           ,chgdate)
+     VALUES
+     <foreach collection="list" item="item" index="index" separator=",">
+          (#{item.gvofcode}
+          ,#{item.gvofname}
+          ,#{item.hgvofcode}
+          ,#{item.useyn}
+          ,#{item.chgdate})
+     </foreach>
+  </insert>
+</mapper>

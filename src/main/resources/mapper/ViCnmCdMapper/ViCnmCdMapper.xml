@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nexmotion.viCnmCd.ViCnmCdMapper">
+
+  <insert id="insertViCnmCd" parameterType="java.util.List">
+     /* ViCnmCdMapper.insertViCmnCd */
+     INSERT IGNORE
+       INTO VI_GVOF_MS
+           (grpcode
+           ,cmdcode
+           ,cmdcodename
+           ,chgdate
+           ,useyn)
+     VALUES
+     <foreach collection="list" item="item" index="index" separator=",">
+          (#{item.grpcode}
+          ,#{item.cmdcode}
+          ,#{item.cmdcodename}
+          ,#{item.chgdate}
+          ,#{item.useyn})
+     </foreach>
+  </insert>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nexmotion.account.AccountMapper">
+  <resultMap type="com.nexmotion.account.Account" id="account">
+       <id column="userid" property="userid" />
+       <result column="userno" property="userno" />
+       <result column="username" property="username" />
+       <result column="gvofcode" property="gvofcode" />
+       <result column="oposcode" property="oposcode" />
+       <result column="cposcode" property="cposcode" />
+  </resultMap>
+
+  <insert id="insertAccount" parameterType="java.util.List">
+       /* AccountMapper.insertAccount */
+       /* 사용자 계정정보를 삭제하는 내용은
+        * 사용자계정정보 연계개발가이드 문서에 적혀있지 않기 때문에
+        * INSERT IGNORE 를 사용함 */
+        
+       INSERT IGNORE
+         INTO account
+             (userid
+             ,userno
+             ,username
+             ,gvofcode
+             ,oposcode
+             ,cposcode)
+       VALUES
+      <foreach collection="list" item="item" index="index" separator=",">
+          (#{item.userid}
+          ,#{item.userno}
+          ,#{item.username}
+          ,#{item.gvofcode}
+          ,#{item.oposcode}
+          ,#{item.cposcode})
+      </foreach>
+  </insert>
+</mapper>
