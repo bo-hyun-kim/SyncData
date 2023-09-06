@@ -19,11 +19,11 @@ public class SyncNpaApplication implements CommandLineRunner {
 	@Autowired
 	private SyncData syncData;
 
-	@Autowired
-	private UserRequester userRequester;
-
-	@Autowired
-	private OrganizationRequester organizationRequester;
+//	@Autowired
+//	private UserRequester userRequester;
+//
+//	@Autowired
+//	private OrganizationRequester organizationRequester;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SyncNpaApplication.class, args);

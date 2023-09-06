@@ -1,6 +1,7 @@
 package com.nexmotion.requester;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -79,10 +80,10 @@ public abstract class AbstractRequester {
 //		this.chgEndDttm = "현재시간";
 //	}
 	
-	public void saveSystemDate() {
+//	public void saveSystemDate() {
 		// db 에 현재 객체가 가진 chgEndDttm 시간을 chgStartDttm 으로 업데이트 한다.
 		// dbsave(this.chgEndDttm);
-	}
+//	}
 	
 	public RequestDTO getRequestDTO() {
 		RequestDTO dto = new RequestDTO();
@@ -151,6 +152,7 @@ public abstract class AbstractRequester {
 		do {
 			try {
 				String response = this.send(dto);
+				System.err.println("response===>" + response);
 				accountXmlResponse.AccountXmlres(response);
 				// 실제 db 에 response 결과값을 파싱해서 저장
 			} catch (Exception e) {
@@ -169,7 +171,7 @@ public abstract class AbstractRequester {
 		} while(true);
 		
 		// db 에 현재시각 기록
-		saveSystemDate();
+//		saveSystemDate();
 		
 		return true;
 	}
@@ -193,7 +195,7 @@ public abstract class AbstractRequester {
 		 * requester.request(seedCrypto.encrypt(testXml.getBytes()), reqHeader);
 		 */
 		byte[] result = request(reqBody.getBytes(), reqHeader);
-		ret = new String(result);
+		ret = new String(result, StandardCharsets.UTF_8);
 		
 		return ret;
 	}

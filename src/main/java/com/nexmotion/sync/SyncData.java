@@ -31,14 +31,17 @@ public class SyncData {
 
         SyncVO sync = new SyncVO();
         List<SyncVO> dateInfo = new ArrayList<>();
+
         dateInfo = syncService.getChgDate();
 
         LocalDateTime startDt = dateInfo.get(0).getChgstartdate();
+        System.err.println("startDt===>"+startDt);
 
         if (startDt == null) {
             LOGGER.info("truncate all tables");
-            syncService.truncateAccount();
-            syncService.truncateOraganization();
+            //실제로 지금 계정 테이블이랑 조직 테이블 샘플 데이터가 truncate 되면 안되니까 일단 주석처리 해놓음
+//            syncService.truncateAccount();
+//            syncService.truncateOraganization();
             startDt = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
         }
 

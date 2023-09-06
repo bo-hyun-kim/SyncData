@@ -5,11 +5,11 @@
 <mapper namespace="com.nexmotion.sync.SyncMapper">
 
     <resultMap id="getchgdate" type="com.nexmotion.sync.SyncVO">
-        <result column= "chgstartdate" property= "chgstartdate" javaType="java.sql.Date" />
-        <result column= "chgenddate" property= "chgenddate" javaType="java.sql.Date" />
+        <result column= "chgstartdate" property= "chgstartdate" javaType="java.time.LocalDateTime" />
+        <result column= "chgenddate" property= "chgenddate" javaType="java.time.LocalDateTime" />
     </resultMap>
 
-    <select id= "getChgDate" resultType="com.nexmotion.sync.SyncVO">
+    <select id= "getChgDate" resultMap="getchgdate">
         /*ManagerMapper.getchgdate Query*/
         SELECT chgstartdate
               ,chgenddate

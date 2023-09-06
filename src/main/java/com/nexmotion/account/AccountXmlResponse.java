@@ -103,9 +103,7 @@ public class AccountXmlResponse {
           }
         }
       }
-      System.err.println("accountList ===> " + (accountList));
       accountService.insertAccount(accountList);
-      System.err.println("accountService ===> " + (accountService));
       
     } catch (Exception e) {
       e.printStackTrace();
