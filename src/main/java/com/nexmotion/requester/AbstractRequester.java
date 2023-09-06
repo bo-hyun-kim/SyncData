@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
+import java.time.format.DateTimeFormatter;
 
 import com.nexmotion.account.AccountXmlResponse;
 
@@ -122,18 +123,19 @@ public abstract class AbstractRequester {
 	}
 
 	private String getData(RequestDTO dto) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		int reqCl = dto.getReqCl();
 		int qryCl = getQryCl();
 		int page = dto.getPage();
 		LocalDateTime chgStartDttm = dto.getChgStartDttm();
-		System.err.println("널 파라미터 확인===>" + chgStartDttm);
+		System.err.println("널 파라미터 확인===>" + chgStartDttm.format(formatter));
 		LocalDateTime chgEndDttm = dto.getChgEndDttm();
 		System.err.println("널 파라미터 확인===>" + chgEndDttm);
 		String fmt = "<REQUEST><HEADER><TLGR_CD>PN02</TLGR_CD><REQ_CL>%d</REQ_CL><QRY_CL>%d</QRY_CL>"
 				+ "<RESP_CD /><REQ_CNT /></HEADER><DATA><PAGE>%d</PAGE><CHG_START_DTTM>%s</CHG_START_DTTM>"
 				+ "<CHG_END_DTTM>%s</CHG_END_DTTM><BLG_AGFC_GVOF_CD>%s</BLG_AGFC_GVOF_CD></DATA></REQUEST>";
-		String xml = String.format(fmt, reqCl, qryCl, page, chgStartDttm, chgEndDttm, blgAgfcGvofCd);
-
+		String xml = String.format(fmt, reqCl, qryCl, page, chgStartDttm.format(formatter), chgEndDttm.format(formatter), blgAgfcGvofCd);
+		System.err.println("xml 확인===>" + xml);
 		return xml;
 	}
 	
