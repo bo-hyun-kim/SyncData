@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nexmotion.sync.SyncMapper">
+
+    <resultMap id="getchgdate" type="com.nexmotion.sync.common">
+        <result column= "chgstartdate" property= "chgstartdate" />
+        <result column= "chgenddate" property= "chgenddate" />
+    </resultMap>
+
+    <select id= "getChgDate" resultMap="getchgdate">
+        /*ManagerMapper.getchgdate Query*/
+        SELECT chgstartdate
+             ,chgenddate
+        FROM syncdata
+    </select>
+
+    <delete id="truncateAccount">
+        /*ManagerMapper.truncateAccount Query*/
+        TRUNCATE
+           TABLE account
+    </delete>
+
+    <delete id="truncateOrganization">
+        /*ManagerMapper.truncateOrganization Query*/
+        TRUNCATE
+            TABLE VI_GVOF_MS
+    </delete>
+
+
+
+</mapper>
