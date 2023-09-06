@@ -13,12 +13,12 @@
         /*ManagerMapper.getchgdate Query*/
         SELECT chgstartdate
               ,chgenddate
-        FROM syncdata
+        FROM syncdate
     </select>
 
     <update id="updateChgDate" parameterType="com.nexmotion.sync.SyncVO">
         /*ManagerMapper.updateChgDate Query*/
-        UPDATE syncdata
+        UPDATE syncdate
            SET chgstartdate = #{chgstartdate}
               ,chgenddate = #{chgenddate}
     </update>

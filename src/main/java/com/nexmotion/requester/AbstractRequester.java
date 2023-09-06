@@ -126,8 +126,9 @@ public abstract class AbstractRequester {
 		int qryCl = getQryCl();
 		int page = dto.getPage();
 		LocalDateTime chgStartDttm = dto.getChgStartDttm();
+		System.err.println("널 파라미터 확인===>" + chgStartDttm);
 		LocalDateTime chgEndDttm = dto.getChgEndDttm();
-		
+		System.err.println("널 파라미터 확인===>" + chgEndDttm);
 		String fmt = "<REQUEST><HEADER><TLGR_CD>PN02</TLGR_CD><REQ_CL>%d</REQ_CL><QRY_CL>%d</QRY_CL>"
 				+ "<RESP_CD /><REQ_CNT /></HEADER><DATA><PAGE>%d</PAGE><CHG_START_DTTM>%s</CHG_START_DTTM>"
 				+ "<CHG_END_DTTM>%s</CHG_END_DTTM><BLG_AGFC_GVOF_CD>%s</BLG_AGFC_GVOF_CD></DATA></REQUEST>";
@@ -145,10 +146,10 @@ public abstract class AbstractRequester {
 	
 	public boolean run(LocalDateTime startDt, LocalDateTime endDt) {
 //		initVariable();
-		RequestDTO dto = getRequestDTO();
+		System.err.println("시간 파라미터 확인===>"+ startDt + endDt);
 		chgStartDttm = endDt;
 		chgEndDttm = startDt;
-		
+		RequestDTO dto = getRequestDTO();
 		do {
 			try {
 				String response = this.send(dto);
