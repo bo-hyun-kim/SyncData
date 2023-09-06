@@ -18,6 +18,11 @@ public class SyncService implements SyncMapper{
     }
 
     @Override
+    public void updateChgDate(Sync sync) throws SQLException {
+        syncMapper.updateChgDate(sync);
+    }
+
+    @Override
     public void truncateAccount() throws SQLException {
         syncMapper.truncateAccount();
     }

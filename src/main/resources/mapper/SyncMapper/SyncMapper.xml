@@ -12,9 +12,15 @@
     <select id= "getChgDate" resultMap="getchgdate">
         /*ManagerMapper.getchgdate Query*/
         SELECT chgstartdate
-             ,chgenddate
+              ,chgenddate
         FROM syncdata
     </select>
+
+    <update id="updateChgDate" parameterType="com.nexmotion.Sync.sync">
+        /*ManagerMapper.updateChgDate Query*/
+        UPDATE syncdata
+           SET chgstartdate = #{enddate}
+    </update>
 
     <delete id="truncateAccount">
         /*ManagerMapper.truncateAccount Query*/
@@ -27,7 +33,6 @@
         TRUNCATE
             TABLE VI_GVOF_MS
     </delete>
-
 
 
 </mapper>

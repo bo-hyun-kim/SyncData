@@ -11,6 +11,8 @@ public interface SyncMapper {
 
     public List<Sync> getChgDate() throws SQLException;
 
+    public void updateChgDate(Sync sync) throws SQLException;
+
     public void truncateAccount() throws SQLException;
 
     public void truncateOraganization() throws SQLException;

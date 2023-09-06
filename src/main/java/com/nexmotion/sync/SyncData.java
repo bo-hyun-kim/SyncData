@@ -30,6 +30,7 @@ public class SyncData {
     @Transactional
     public void sync() throws Exception {
 
+        Sync sync = new Sync();
         List<Sync> dateInfo = new ArrayList<>();
         dateInfo = syncService.getChgDate();
 
@@ -44,10 +45,12 @@ public class SyncData {
 
         LocalDateTime endDt = LocalDateTime.now();
 
-        organizationSync(startDt, endDt);
-        userSync(startDt, endDt);
+        organizationRequester.run(startDt, endDt);
+        userRequester.run(startDt, endDt);
+//        organizationSync(startDt, endDt);
+//        userSync(startDt, endDt);
 
-        endDt += 1초;
-        updateDate(endDt);
+        sync.setChgenddate(endDt);
+        syncService.updateChgDate(sync);
     }
 }

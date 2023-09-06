@@ -1,6 +1,8 @@
 package com.nexmotion.requester;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -22,6 +24,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 
@@ -61,20 +64,20 @@ public abstract class AbstractRequester {
 	String qryPups = getQryPups();
 	
 	// 조회하려는 수정일시의 시작시간 (YYYYMMDDHH24MISS)
-	String chgStartDttm = null;
-	
+	LocalDateTime chgStartDttm = null;
+
 	// 조회하려는 수정일시의 종료시간 (YYYYMMDDHH24MISS)
-	String chgEndDttm = null;	
+	LocalDateTime chgEndDttm = null;
 	
 	/**
 	 * DB 에서 조회하려는 시스템의 시간을 불러온다. 
 	 */
-	public void loadSystemDate() {
-		// DB 에서 가져옴
-		this.chgStartDttm = "20181120100000";
-		//this.chgEndDttm = 현재시간으로 변경
-		this.chgEndDttm = "현재시간";
-	}
+//	public void loadSystemDate() {
+//		// DB 에서 가져옴
+//		this.chgStartDttm = "20181120100000";
+//		//this.chgEndDttm = 현재시간으로 변경
+//		this.chgEndDttm = "현재시간";
+//	}
 	
 	public void saveSystemDate() {
 		// db 에 현재 객체가 가진 chgEndDttm 시간을 chgStartDttm 으로 업데이트 한다.
@@ -91,9 +94,9 @@ public abstract class AbstractRequester {
 		return dto;
 	}
 	
-	void initVariable() {
-		loadSystemDate();
-	}
+//	void initVariable() {
+//		loadSystemDate();
+//	}
 	
 	/**
 	 * 공통 헤더 작성
@@ -121,8 +124,8 @@ public abstract class AbstractRequester {
 		int reqCl = dto.getReqCl();
 		int qryCl = getQryCl();
 		int page = dto.getPage();
-		String chgStartDttm = dto.getChgStartDttm();
-		String chgEndDttm = dto.getChgEndDttm();
+		LocalDateTime chgStartDttm = dto.getChgStartDttm();
+		LocalDateTime chgEndDttm = dto.getChgEndDttm();
 		
 		String fmt = "<REQUEST><HEADER><TLGR_CD>PN02</TLGR_CD><REQ_CL>%d</REQ_CL><QRY_CL>%d</QRY_CL>"
 				+ "<RESP_CD /><REQ_CNT /></HEADER><DATA><PAGE>%d</PAGE><CHG_START_DTTM>%s</CHG_START_DTTM>"
@@ -139,9 +142,11 @@ public abstract class AbstractRequester {
 	}
 
 	
-	public boolean run() {
-		initVariable();
+	public boolean run(LocalDateTime startDt, LocalDateTime endDt) {
+//		initVariable();
 		RequestDTO dto = getRequestDTO();
+		chgStartDttm = endDt;
+		chgEndDttm = startDt;
 		
 		do {
 			try {
