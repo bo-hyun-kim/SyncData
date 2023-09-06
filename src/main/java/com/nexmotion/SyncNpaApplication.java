@@ -49,26 +49,4 @@ public class SyncNpaApplication implements CommandLineRunner {
 //		}
 
 	}
-//	@Transactional
-//	public void sync() throws Exception {
-//		SyncVO syncvo = new SyncVO();
-//		List<SyncVO> dateInfo = new ArrayList<>();
-//		dateInfo = syncService.getChgDate();
-//
-//		LocalDateTime startDt = dateInfo.get(0).getChgstartdate();
-//
-//		if (startDt == null) {
-//			LOGGER.info("truncate all tables");
-//			syncService.truncateAccount();
-//			syncService.truncateOraganization();
-//			startDt = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
-//		}
-//		LocalDateTime endDt = LocalDateTime.now();
-//		organizationRequester.run(startDt, endDt);
-//		userRequester.run(startDt, endDt);
-////		organizationSync(startDt, endDt);
-////		userSync(startDt, endDt);
-//		syncvo.setChgenddate(endDt);
-//		syncService.updateChgDate(syncvo);
-//	}
 }

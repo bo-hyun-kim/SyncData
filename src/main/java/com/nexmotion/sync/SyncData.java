@@ -43,13 +43,15 @@ public class SyncData {
         }
 
         LocalDateTime endDt = LocalDateTime.now();
+        sync.setChgenddate(endDt);
 
         organizationRequester.run(startDt, endDt);
         userRequester.run(startDt, endDt);
 //        organizationSync(startDt, endDt);
 //        userSync(startDt, endDt);
+        endDt = endDt.plusSeconds(1);
 
-        sync.setChgenddate(endDt);
+        sync.setChgstartdate(endDt);
         syncService.updateChgDate(sync);
     }
 }

@@ -19,7 +19,8 @@
     <update id="updateChgDate" parameterType="com.nexmotion.sync.SyncVO">
         /*ManagerMapper.updateChgDate Query*/
         UPDATE syncdata
-           SET chgstartdate = #{chgenddate}
+           SET chgstartdate = #{chgstartdate}
+              ,chgenddate = #{chgenddate}
     </update>
 
     <delete id="truncateAccount">
