@@ -1,10 +1,10 @@
-package com.nexmotion.viCnmCd;
+package com.nexmotion.position;
 
 import lombok.Data;
 
 @Data
 
-public class ViCnmCd {
+public class Position {
   private String grpcode;
   private String cmdcode;
   private String cmdcodename;

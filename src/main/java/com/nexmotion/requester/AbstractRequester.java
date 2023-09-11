@@ -1,18 +1,20 @@
 package com.nexmotion.requester;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import com.nexmotion.account.ParseAccountXML;
+import com.nexmotion.organ.ParseOrganXML;
+import com.nexmotion.position.ParsePositionXML;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.httpclient.HttpStatus;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
@@ -23,17 +25,25 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
-import java.time.format.DateTimeFormatter;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
-import com.nexmotion.account.AccountXmlResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.time.format.DateTimeFormatter;
 
 @Component
 public abstract class AbstractRequester {
+
+	private final Logger logger = LoggerFactory.getLogger(AbstractRequester.class);
 	
 	@Value("${server.addr}")
 	private String serverAddr;
@@ -48,8 +58,17 @@ public abstract class AbstractRequester {
 	private String blgAgfcGvofCd;
 
 	@Autowired
-	AccountXmlResponse accountXmlResponse;
-	
+	ParseAccountXML parseAccountXML;
+
+	@Autowired
+	ParseOrganXML parseOrganXML;
+
+	@Autowired
+	ParsePositionXML parsePositionXML;
+
+	protected AbstractRequester() {
+	}
+
 	// 조회 구분 반환
 	public abstract int getQryCl();
 
@@ -146,27 +165,49 @@ public abstract class AbstractRequester {
 	}
 
 	
-	public boolean run(LocalDateTime startDt, LocalDateTime endDt) {
+	public boolean run(LocalDateTime startDt, LocalDateTime endDt, int code) {
 //		initVariable();
 		System.err.println("시간 파라미터 확인===>"+ startDt + endDt);
 		chgStartDttm = endDt;
 		chgEndDttm = startDt;
 		RequestDTO dto = getRequestDTO();
+		System.err.println("dto확인 ===>"+ dto);
+		String respCd = null;
+		String respCdString = null;
+
 		do {
 			try {
 				String response = this.send(dto);
-				System.err.println("response===>" + response);
-				accountXmlResponse.AccountXmlres(response);
+
+				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder builder = factory.newDocumentBuilder();
+				Document doc = builder.parse(new InputSource(new StringReader(response)));
+				Element rootElement = doc.getDocumentElement();
+
+				respCd = rootElement.getElementsByTagName("RESP_CD").item(0).getTextContent();
+
+
 				// 실제 db 에 response 결과값을 파싱해서 저장
+				if (code == 1) {
+					parseAccountXML.parseAccountData(response);
+				}
+				if (code == 2) {
+					parseOrganXML.parseOrganData(response);
+				}
+				if (code == 3) {
+					parsePositionXML.parsePositionData(response);
+				}
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				// 에러로그를 기록
+				logger.error("ERROR_SERVICE(parseError)", e);
 				// DB Rollback
 				return false;
 			}
 			
-			if (dto.getPage() > 3)
+			if (!respCd.equals("02"))
 				break;
 			
 			dto.setReqCl(1);

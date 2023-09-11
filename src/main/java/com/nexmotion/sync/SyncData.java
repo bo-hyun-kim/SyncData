@@ -1,7 +1,6 @@
 package com.nexmotion.sync;
 
-import com.nexmotion.requester.OrganizationRequester;
-import com.nexmotion.requester.UserRequester;
+import com.nexmotion.requester.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,22 @@ public class SyncData {
     @Autowired
     private OrganizationRequester organizationRequester;
 
+    @Autowired
+    private UserComplainRequester userComplainRequester;
+
+    @Autowired
+    private CommonCodeRequester commonCodeRequester;
+
+    @Autowired
+    private JobGradeRequester jobGradeRequester;
+
+    @Autowired
+    private OrganRecordRequester organRecordRequester;
+
+    @Autowired
+    private  PositionRequester positionRequester;
+
+
     @Transactional
     public void sync() throws Exception {
 
@@ -48,10 +63,16 @@ public class SyncData {
         LocalDateTime endDt = LocalDateTime.now();
         sync.setChgenddate(endDt);
 
-        organizationRequester.run(startDt, endDt);
-        userRequester.run(startDt, endDt);
-//        organizationSync(startDt, endDt);
-//        userSync(startDt, endDt);
+        boolean userResult = userRequester.run(startDt, endDt, 1);
+        boolean userComplainResult = userComplainRequester.run(startDt, endDt, 1);
+        boolean organResult = organizationRequester.run(startDt, endDt, 2);
+        boolean organRecordResult = organRecordRequester.run(startDt, endDt, 2);
+        boolean postionResult = positionRequester.run(startDt, endDt, 3);
+        boolean jobGradeResult = jobGradeRequester.run(startDt, endDt, 3);
+        boolean commonCodeResult = commonCodeRequester.run(startDt, endDt, 3);
+
+        // return 한 값으로 에러 처리 필요
+
         endDt = endDt.plusSeconds(1);
 
         sync.setChgstartdate(endDt);

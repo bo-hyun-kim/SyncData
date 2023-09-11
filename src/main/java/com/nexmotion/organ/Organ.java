@@ -1,9 +1,9 @@
-package com.nexmotion.viGvofMs;
+package com.nexmotion.organ;
 
 import lombok.Data;
 
 @Data
-public class ViGvofMs {
+public class Organ {
   private String gvofcode;
   private String gvofname;
   private String hgvofcode;

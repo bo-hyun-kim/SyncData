@@ -13,7 +13,7 @@ public class UserRequester extends AbstractRequester {
 
 	@Override
 	public String getQryPups() {
-		return "사용자조직정보조회";
+		return "사용자기본 데이터 동기화";
 	}
 
 }

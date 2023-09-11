@@ -1,32 +1,15 @@
 package com.nexmotion.sendXml;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
-
+import com.nexmotion.account.ParseAccountXML;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import com.nexmotion.account.AccountXmlResponse;
-import com.nexmotion.requester.RequestDTO;
-import com.nexmotion.requester.AbstractRequester;
-
-import org.apache.commons.codec.binary.Base64;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 
 @Component
 public class SendXmlToProxyServer {
 	String responseDataString = "";
 
 	@Autowired
-	private AccountXmlResponse accountXmlResponse;
+	private ParseAccountXML parseAccountXML;
 
 	/*
 	public boolean AccountXmlAns2() throws IOException {

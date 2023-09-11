@@ -1,16 +1,15 @@
 package com.nexmotion.sync;
 
+import com.nexmotion.account.ParseAccountXML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.nexmotion.account.AccountXmlResponse;
 
 @Component
 public class SendXml {
 	String responseDataString = "";
 
 	@Autowired
-	private AccountXmlResponse accountXmlResponse;
+	private ParseAccountXML parseAccountXML;
 
 	/*
 	public boolean AccountXmlAns2() throws IOException {
