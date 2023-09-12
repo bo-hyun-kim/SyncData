@@ -7,28 +7,54 @@
         <id column="cnmcode" property="cnmcode" />
     </resultMap>
 
-  <insert id="insertPosition" parameterType="java.util.List">
-     /* ViCnmCdMapper.insertViCmnCd */
+  <insert id="insertPositionList" parameterType="java.util.List">
+     /* positionMapper.insertPositionList */
      INSERT IGNORE
        INTO VI_CNM_CD
-           (CMN_CD
-           ,CMN_CD_NM
-           ,GRP_CD
+           (cnmcode
+           ,cnmname
+           ,grpcode
            ,chgdate
            ,useyn)
      VALUES
      <foreach collection="list" item="item" index="index" separator=",">
-          (#{item.grpcode}
-          ,#{item.cmdcode}
-          ,#{item.cmdcodename}
-          ,#{item.chgdate}
-          ,#{item.useyn})
+           (#{item.cnmcode}
+           ,#{item.cnmname}
+           ,#{item.grpcode}
+           ,#{item.chgdate}
+           ,#{item.useyn})
      </foreach>
   </insert>
+    <insert id="insertPosition" parameterType="com.nexmotion.position.Position">
+        /* positionMapper.insertPosition */
+        INSERT IGNORE
+          INTO VI_CNM_CD
+               (cnmcode
+               ,cnmname
+               ,grpcode
+               ,chgdate
+               ,useyn)
+        VALUES (#{cnmcode}
+               ,#{cnmname}
+               ,#{grpcode}
+               ,#{chgdate}
+               ,#{useyn})
+    </insert>
+
+    <update id="updatePosition" parameterType="com.nexmotion.position.Position">
+        /* positionMapper.updatePosition */
+        UPDATE VI_CNM_CD
+           SET cnmcode = #{cnmcode}
+              ,cnmname = #{cnmname}
+              ,grpcode = #{grpcode}
+              ,chgdate = #{chgdate}
+              ,useyn = #{useyn}
+         WHERE cnmcode = #{cnmcode}
+    </update>
 
     <select id="selectPosition" resultMap="position">
         /* positionMapper.selectPosition */
         SELECT cnmcode
-        FROM VI_CNM_CD
+          FROM VI_CNM_CD
     </select>
 </mapper>

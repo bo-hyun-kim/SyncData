@@ -7,10 +7,8 @@
     <delete id="deletedata" parameterType="com.nexmotion.deletedata.DeleteDataMapper">
         /*DeleteDataMapper.deletedata*/
         DELETE
-            FROM account
-            WHERE
-                userstat = '03'
-            AND
-                chgdate <![CDATA[<=]]> #{thresholdDate}
+          FROM account
+         WHERE userstat = '03'
+           AND chgdate <![CDATA[<=]]> #{thresholdDate}
     </delete> 
 </mapper>

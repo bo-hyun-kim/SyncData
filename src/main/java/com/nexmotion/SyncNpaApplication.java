@@ -19,12 +19,6 @@ public class SyncNpaApplication implements CommandLineRunner {
 	@Autowired
 	private SyncData syncData;
 
-//	@Autowired
-//	private UserRequester userRequester;
-//
-//	@Autowired
-//	private OrganizationRequester organizationRequester;
-
 	public static void main(String[] args) {
 		SpringApplication.run(SyncNpaApplication.class, args);
 	}
@@ -37,16 +31,6 @@ public class SyncNpaApplication implements CommandLineRunner {
 		} catch (Exception e) {
 			LOGGER.error("ERROR_sync()", e);
 		}
-
-//		if (!organizationRequester.run()) {
-//			System.err.println("조직정보 동기화 실패!");
-//			return;
-//		}
-//
-//		if (!userRequester.run()) {
-//			System.err.println("사용자정보 동기화 실패!");
-//			return;
-//		}
 
 	}
 }

@@ -6,8 +6,8 @@ import lombok.Data;
 
 public class Position {
   private String grpcode;
-  private String cmdcode;
-  private String cmdcodename;
+  private String cnmcode;
+  private String cnmname;
   private String chgdate;
   private String useyn;
 }

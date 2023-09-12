@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 public class DeleteDataService implements DeleteDataMapper {
 
     @Autowired
-    private DeleteDataMapper deletedataMapper;
+    private DeleteDataMapper deleteDataMapper;
 
     @Override
     public void deletedata(DeleteData deleteData) throws SQLException {
-        deletedataMapper.deletedata(deleteData);
+        deleteDataMapper.deletedata(deleteData);
     }
 }

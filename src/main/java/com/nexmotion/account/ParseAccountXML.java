@@ -1,6 +1,8 @@
 package com.nexmotion.account;
 
 import java.io.StringReader;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,25 +62,12 @@ public class ParseAccountXML {
             }
 
             List<Account> newData = parseData(doc);
-            //이전
-            for (Account newAccount : newData) {
-                boolean found = false;
-                for (Account existingAccount : existingData) {
-                    if (newAccount.getUserid().equals(existingAccount.getUserid())) {
-                        System.err.println("겹치는 데이터" + newAccount);
-                        accountService.updateAccount(newAccount);
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    accountService.insertAccount(newAccount);
-                }
-            }
-            for (Account account : existingData) {
-                System.out.println(account);
-            }
 
+            if (existingData.size() == 0) {
+                accountService.insertAccountList(newData);
+            } else {
+                compareData(newData, existingData);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,6 +97,7 @@ public class ParseAccountXML {
                 String userOposCd = getElementText(recordElement, "USER_OPOS_CD");
                 String userCposCd = getElementText(recordElement, "USER_CPOS_CD");
                 String userStatCd = getElementText(recordElement, "USER_STAT_CD");
+                String chgdate = getElementText(recordElement, "CHG_DTTM");
 
                 account.setUserno(userNo);
                 account.setUserid(userId);
@@ -116,21 +106,20 @@ public class ParseAccountXML {
                 account.setOposcode(userOposCd);
                 account.setCposcode(userCposCd);
                 account.setUserstat(userStatCd);
+                account.setChgdate(chgdate);
 
                 accountList.add(account);
                 System.err.println("account===>"+account);
 
             }
-
             System.err.println("accountList===>"+accountList);
-//            accountService.insertAccount(accountList);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return accountList;
     }
 
-    private static String getElementText(Element parentElement, String tagName) {
+    private String getElementText(Element parentElement, String tagName) {
         NodeList nodeList = parentElement.getElementsByTagName(tagName);
         if (nodeList.getLength() > 0) {
             Node node = nodeList.item(0);
@@ -139,7 +128,7 @@ public class ParseAccountXML {
         return null;
     }
 
-    private static List<Node> asList(NodeList nodeList) {
+    private List<Node> asList(NodeList nodeList) {
         List<Node> nodeListAsList = new ArrayList<>();
         for (int i = 0; i < nodeList.getLength(); i++) {
             nodeListAsList.add(nodeList.item(i));
@@ -147,6 +136,22 @@ public class ParseAccountXML {
         return nodeListAsList;
     }
 
+    private void compareData(List<Account> newData, List<Account> existingData) throws Exception {
+        for (Account newAccount : newData) {
+            boolean found = false;
+            for (Account existingAccount : existingData) {
+                if (newAccount.getUserid().equals(existingAccount.getUserid())) {
+                    System.err.println("겹치는 데이터" + newAccount);
+                    accountService.updateAccount(newAccount);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                accountService.insertAccount(newAccount);
+            }
+        }
+    }
 
 //        // MARK: - PAGE
 //        for (Node page : XmlUtil.asList(doc.getElementsByTagName("PAGE"))) {

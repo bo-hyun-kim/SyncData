@@ -8,11 +8,10 @@
   </resultMap>
 
   <insert id="insertAccountList" parameterType="java.util.List">
-       /* AccountMapper.insertAccount */
+       /* AccountMapper.insertAccountList */
        /* 사용자 계정정보를 삭제하는 내용은
         * 사용자계정정보 연계개발가이드 문서에 적혀있지 않기 때문에
         * INSERT IGNORE 를 사용함 */
-        
        INSERT IGNORE
          INTO account
              (userid
@@ -21,16 +20,18 @@
              ,gvofcode
              ,oposcode
              ,cposcode
-             ,userstat)
+             ,userstat
+             ,chgdate)
        VALUES
       <foreach collection="list" item="item" index="index" separator=",">
-          (#{item.userid}
-          ,#{item.userno}
-          ,#{item.username}
-          ,#{item.gvofcode}
-          ,#{item.oposcode}
-          ,#{item.cposcode}
-          ,#{item.userstat})
+             (#{item.userid}
+             ,#{item.userno}
+             ,#{item.username}
+             ,#{item.gvofcode}
+             ,#{item.oposcode}
+             ,#{item.cposcode}
+             ,#{item.userstat}
+             ,#{item.chgdate})
       </foreach>
   </insert>
 
@@ -44,14 +45,16 @@
            ,gvofcode
            ,oposcode
            ,cposcode
-           ,userstat)
+           ,userstat
+           ,chgdate)
     VALUES (#{userid}
            ,#{userno}
            ,#{username}
            ,#{gvofcode}
            ,#{oposcode}
            ,#{cposcode}
-           ,#{userstat})
+           ,#{userstat}
+           ,#{chgdate})
   </insert>
   <select id="selectAccount" parameterType="com.nexmotion.account.Account" resultMap="account">
       /* AccountMapper.selectAccount */
@@ -69,6 +72,7 @@
           ,oposcode = #{oposcode}
           ,cposcode = #{cposcode}
           ,userstat = #{userstat}
+          ,chgdate = #{chgdate}
      WHERE userid = #{userid}
   </update>
 </mapper>

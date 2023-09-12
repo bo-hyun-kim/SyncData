@@ -74,12 +74,12 @@ public class SyncData {
 
         try {
             userRequester.run(startDt, endDt, 1);
-            userComplainRequester.run(startDt, endDt, 1);
+//            userComplainRequester.run(startDt, endDt, 1);
             organizationRequester.run(startDt, endDt, 2);
-            organRecordRequester.run(startDt, endDt, 2);
+//            organRecordRequester.run(startDt, endDt, 2);
             positionRequester.run(startDt, endDt, 3);
-            jobGradeRequester.run(startDt, endDt, 3);
-            commonCodeRequester.run(startDt, endDt, 3);
+//            jobGradeRequester.run(startDt, endDt, 3);
+//            commonCodeRequester.run(startDt, endDt, 3);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,20 +94,21 @@ public class SyncData {
         syncService.updateChgDate(sync);
 
         LocalDate now = LocalDate.now();
-        if (now.getDayOfYear() == 255) { //9월12일로 설정. 1로 설정시 1월1일
-            System.err.println("DataDeleteStart");
-            //System.err.println("minusyears: " + now.minusYears(3));
-            //now.minusYears(3);
-            String dateToString = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            DeleteData deletedata = new DeleteData();
-            deletedata.setThresholdDate(dateToString);
-            try {
-                deleteDataService.deletedata(deletedata);
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.err.println("failed");
-            }
-            System.err.println("success");
-        }
+
+//        if (now.getDayOfYear() == 255) { //9월12일로 설정. 1로 설정시 1월1일
+//            System.err.println("DataDeleteStart");
+//            //System.err.println("minusyears: " + now.minusYears(3));
+//            //now.minusYears(3);
+//            String dateToString = now.minusYears(3).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//            DeleteData deletedata = new DeleteData();
+//            deletedata.setThresholdDate(dateToString);
+//            try {
+//                deleteDataService.deletedata(deletedata);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                System.err.println("failed");
+//            }
+//            System.err.println("success");
+//        }
     }
 }

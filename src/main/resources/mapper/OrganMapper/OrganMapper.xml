@@ -13,23 +13,38 @@
         <result column="useyn" property="useyn" />
     </resultMap>
 
-  <insert id="insertOrgan" parameterType="java.util.List">
-     /* OrganMapper.insertOrgan */
+  <insert id="insertOrganList" parameterType="java.util.List">
+     /* OrganMapper.insertOrganList */
      INSERT IGNORE
        INTO VI_GVOF_MS
-           (gvofcode
-           ,gvofname
-           ,hgvofcode
-           ,useyn
-           ,chgdate)
+            (gvofcode
+            ,gvofname
+            ,hgvofcode
+            ,useyn
+            ,chgdate)
      VALUES
      <foreach collection="list" item="item" index="index" separator=",">
-          (#{item.gvofcode}
-          ,#{item.gvofname}
-          ,#{item.hgvofcode}
-          ,#{item.useyn}
-          ,#{item.chgdate})
+            (#{item.gvofcode}
+            ,#{item.gvofname}
+            ,#{item.hgvofcode}
+            ,#{item.useyn}
+            ,#{item.chgdate})
      </foreach>
+  </insert>
+  <insert id="insertOrgan" parameterType="com.nexmotion.organ.Organ">
+      /* OrganMapper.insertOrgan */
+        INSERT IGNORE
+          INTO VI_GVOF_MS
+               (gvofcode
+               ,gvofname
+               ,hgvofcode
+               ,useyn
+               ,chgdate)
+        VALUES (#{gvofcode}
+               ,#{gvofname}
+               ,#{hgvofcode}
+               ,#{useyn}
+               ,#{chgdate})
   </insert>
 
   <select id="selectOrgan" resultMap="organ">
@@ -37,4 +52,14 @@
     SELECT gvofcode
       FROM VI_GVOF_MS
   </select>
+  <update id="updateOrgan" parameterType="com.nexmotion.organ.Organ">
+      /* OrganMapper.updateOrgan */
+      UPDATE VI_GVOF_MS
+         SET gvofcode = #{gvofcode}
+            ,gvofname = #{gvofname}
+            ,hgvofcode = #{hgvofcode}
+            ,useyn = #{useyn}
+            ,chgdate = #{chgdate}
+       WHERE gvofcode = #{gvofcode}
+  </update>
 </mapper>

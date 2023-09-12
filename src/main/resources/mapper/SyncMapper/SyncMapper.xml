@@ -13,7 +13,7 @@
         /*ManagerMapper.getchgdate Query*/
         SELECT chgstartdate
               ,chgenddate
-        FROM syncdate
+          FROM syncdate
     </select>
 
     <update id="updateChgDate" parameterType="com.nexmotion.sync.SyncVO">
@@ -32,7 +32,7 @@
     <delete id="truncateOrganization">
         /*ManagerMapper.truncateOrganization Query*/
         TRUNCATE
-            TABLE VI_GVOF_MS
+           TABLE VI_GVOF_MS
     </delete>
 
 

@@ -173,12 +173,11 @@ public abstract class AbstractRequester {
 		RequestDTO dto = getRequestDTO();
 //		System.err.println("dto확인 ===>"+ dto);
 		String respCd = null;
-		String respCdString = null;
 
 		do {
 			try {
-
 				String response = this.send(dto);
+
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				Document doc = builder.parse(new InputSource(new StringReader(response)));
@@ -187,16 +186,19 @@ public abstract class AbstractRequester {
 				respCd = rootElement.getElementsByTagName("RESP_CD").item(0).getTextContent();
 
 				// 실제 db 에 response 결과값을 파싱해서 저장
-				if (code == 1) {
-					parseAccountXML.parseAccountData(response);
+				switch (code) {
+					case 1:
+						parseAccountXML.parseAccountData(response);
+						break;
+					case 2:
+						parseOrganXML.parseOrganData(response);
+						break;
+					case 3:
+						parsePositionXML.parsePositionData(response);
+						break;
+					default:
+						break;
 				}
-				if (code == 2) {
-					parseOrganXML.parseOrganData(response);
-				}
-				if (code == 3) {
-					parsePositionXML.parsePositionData(response);
-				}
-
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
