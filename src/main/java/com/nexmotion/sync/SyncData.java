@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 public class SyncData {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(SyncData.class);
+    private final Logger logger = LoggerFactory.getLogger(SyncData.class);
 
     @Autowired
     private SyncService syncService;
@@ -50,10 +50,10 @@ public class SyncData {
         dateInfo = syncService.getChgDate();
 
         LocalDateTime startDt = dateInfo.get(0).getChgstartdate();
-        System.err.println("startDt===>"+startDt);
+//        System.err.println("startDt===>"+startDt);
 
         if (startDt == null) {
-            LOGGER.info("truncate all tables");
+            logger.info("truncate all tables");
             //실제로 지금 계정 테이블이랑 조직 테이블 샘플 데이터가 truncate 되면 안되니까 일단 주석처리 해놓음
 //            syncService.truncateAccount();
 //            syncService.truncateOraganization();
@@ -63,13 +63,19 @@ public class SyncData {
         LocalDateTime endDt = LocalDateTime.now();
         sync.setChgenddate(endDt);
 
-        boolean userResult = userRequester.run(startDt, endDt, 1);
-        boolean userComplainResult = userComplainRequester.run(startDt, endDt, 1);
-        boolean organResult = organizationRequester.run(startDt, endDt, 2);
-        boolean organRecordResult = organRecordRequester.run(startDt, endDt, 2);
-        boolean postionResult = positionRequester.run(startDt, endDt, 3);
-        boolean jobGradeResult = jobGradeRequester.run(startDt, endDt, 3);
-        boolean commonCodeResult = commonCodeRequester.run(startDt, endDt, 3);
+        try {
+            userRequester.run(startDt, endDt, 1);
+            userComplainRequester.run(startDt, endDt, 1);
+            organizationRequester.run(startDt, endDt, 2);
+            organRecordRequester.run(startDt, endDt, 2);
+            positionRequester.run(startDt, endDt, 3);
+            jobGradeRequester.run(startDt, endDt, 3);
+            commonCodeRequester.run(startDt, endDt, 3);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("ERROR_SYNC()");
+        }
 
         // return 한 값으로 에러 처리 필요
 

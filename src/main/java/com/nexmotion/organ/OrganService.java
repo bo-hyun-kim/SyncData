@@ -12,6 +12,11 @@ public class OrganService implements OrganMapper {
   private OrganMapper organMapper;
 
   @Override
+  public List<Organ> selectOrgan() throws Exception {
+    return organMapper.selectOrgan();
+  }
+
+  @Override
   public void insertOrgan(List<Organ> list) throws Exception {
     organMapper.insertOrgan(list);
   }

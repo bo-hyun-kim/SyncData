@@ -5,14 +5,9 @@
 <mapper namespace="com.nexmotion.account.AccountMapper">
   <resultMap type="com.nexmotion.account.Account" id="account">
        <id column="userid" property="userid" />
-       <result column="userno" property="userno" />
-       <result column="username" property="username" />
-       <result column="gvofcode" property="gvofcode" />
-       <result column="oposcode" property="oposcode" />
-       <result column="cposcode" property="cposcode" />
   </resultMap>
 
-  <insert id="insertAccount" parameterType="java.util.List">
+  <insert id="insertAccountList" parameterType="java.util.List">
        /* AccountMapper.insertAccount */
        /* 사용자 계정정보를 삭제하는 내용은
         * 사용자계정정보 연계개발가이드 문서에 적혀있지 않기 때문에
@@ -25,7 +20,8 @@
              ,username
              ,gvofcode
              ,oposcode
-             ,cposcode)
+             ,cposcode
+             ,userstat)
        VALUES
       <foreach collection="list" item="item" index="index" separator=",">
           (#{item.userid}
@@ -33,7 +29,46 @@
           ,#{item.username}
           ,#{item.gvofcode}
           ,#{item.oposcode}
-          ,#{item.cposcode})
+          ,#{item.cposcode}
+          ,#{item.userstat})
       </foreach>
   </insert>
+
+  <insert id="insertAccount" parameterType="com.nexmotion.account.Account">
+      /* AccountMapper.insertAccount */
+    INSERT IGNORE
+      INTO account
+           (userid
+           ,userno
+           ,username
+           ,gvofcode
+           ,oposcode
+           ,cposcode
+           ,userstat)
+    VALUES (#{userid}
+           ,#{userno}
+           ,#{username}
+           ,#{gvofcode}
+           ,#{oposcode}
+           ,#{cposcode}
+           ,#{userstat})
+  </insert>
+  <select id="selectAccount" parameterType="com.nexmotion.account.Account" resultMap="account">
+      /* AccountMapper.selectAccount */
+    SELECT userid
+      FROM account
+  </select>
+
+  <update id="updateAccount" parameterType="com.nexmotion.account.Account">
+      /* AccountMapper.updateAccount */
+    UPDATE account
+       SET userid = #{userid}
+          ,userno = #{userno}
+          ,username = #{username}
+          ,gvofcode = #{gvofcode}
+          ,oposcode = #{oposcode}
+          ,cposcode = #{cposcode}
+          ,userstat = #{userstat}
+     WHERE userid = #{userid}
+  </update>
 </mapper>

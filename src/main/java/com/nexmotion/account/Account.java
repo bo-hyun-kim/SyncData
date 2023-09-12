@@ -10,4 +10,5 @@ public class Account {
   private String gvofcode;  
   private String oposcode;
   private String cposcode;
+  private String userstat;
 }

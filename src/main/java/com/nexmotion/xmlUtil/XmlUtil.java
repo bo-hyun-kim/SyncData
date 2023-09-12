@@ -14,7 +14,8 @@ public final class XmlUtil {
 	}
 
 	public static List<Node> asList(NodeList n) {
-
+		System.err.println("n==."+n);
+		System.err.println("new NodeListWrapper(n)"+new NodeListWrapper(n));
 		return n.getLength() == 0 ? Collections.<Node>emptyList() : new NodeListWrapper(n);
 	}
 

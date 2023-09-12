@@ -3,9 +3,18 @@
      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nexmotion.organ.OrganMapper">
+    <resultMap id="organ" type="com.nexmotion.organ.Organ">
+        <id column="gvofcode" property="gvofcode" />
+        <result column="gvofname" property="gvofname" />
+        <result column="hgvofcode" property="hgvofcode" />
+        <result column="gvofcode" property="gvofcode" />
+        <result column="chgdate" property="chgdate" />
+        <result column="isdept" property="isdept" />
+        <result column="useyn" property="useyn" />
+    </resultMap>
 
   <insert id="insertOrgan" parameterType="java.util.List">
-     /* ViGvofMsMapper.insertViGvofMs */
+     /* OrganMapper.insertOrgan */
      INSERT IGNORE
        INTO VI_GVOF_MS
            (gvofcode
@@ -22,4 +31,10 @@
           ,#{item.chgdate})
      </foreach>
   </insert>
+
+  <select id="selectOrgan" resultMap="organ">
+    /* OrganMapper.selectOrgan */
+    SELECT gvofcode
+      FROM VI_GVOF_MS
+  </select>
 </mapper>

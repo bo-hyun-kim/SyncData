@@ -167,25 +167,24 @@ public abstract class AbstractRequester {
 	
 	public boolean run(LocalDateTime startDt, LocalDateTime endDt, int code) {
 //		initVariable();
-		System.err.println("시간 파라미터 확인===>"+ startDt + endDt);
+//		System.err.println("시간 파라미터 확인===>"+ startDt + endDt);
 		chgStartDttm = endDt;
 		chgEndDttm = startDt;
 		RequestDTO dto = getRequestDTO();
-		System.err.println("dto확인 ===>"+ dto);
+//		System.err.println("dto확인 ===>"+ dto);
 		String respCd = null;
 		String respCdString = null;
 
 		do {
 			try {
-				String response = this.send(dto);
 
+				String response = this.send(dto);
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				Document doc = builder.parse(new InputSource(new StringReader(response)));
 				Element rootElement = doc.getDocumentElement();
 
 				respCd = rootElement.getElementsByTagName("RESP_CD").item(0).getTextContent();
-
 
 				// 실제 db 에 response 결과값을 파싱해서 저장
 				if (code == 1) {
