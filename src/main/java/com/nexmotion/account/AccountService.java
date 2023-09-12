@@ -15,12 +15,13 @@ public class AccountService implements AccountMapper {
 	private AccountMapper accountMapper;
 	
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Throwable.class)
+	@Transactional
 	public void insertAccountList(List<Account> list) throws Exception {
 		accountMapper.insertAccountList(list);
 	}
 
 	@Override
+	@Transactional
 	public void insertAccount(Account account) throws Exception {
 		accountMapper.insertAccount(account);
 	}
@@ -31,6 +32,7 @@ public class AccountService implements AccountMapper {
 	}
 
 	@Override
+	@Transactional
 	public void updateAccount(Account account) throws Exception {
 		accountMapper.updateAccount(account);
 	}

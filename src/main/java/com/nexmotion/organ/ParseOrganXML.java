@@ -8,8 +8,13 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import com.nexmotion.account.Account;
+import com.nexmotion.account.ParseAccountXML;
+import com.nexmotion.code.ErrorCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -21,12 +26,16 @@ import org.xml.sax.InputSource;
 @Component
 public class ParseOrganXML {
 
-  @Autowired
-  private OrganService organService;
+  	@Autowired
+  	private OrganService organService;
 
-	public void parseOrganData(String parameter) {
+  	private final Logger logger = LoggerFactory.getLogger(ParseOrganXML.class);
+
+  	public void parseOrganData(String parameter) throws Exception{
 
 		try {
+			ErrorCode errorcode = new ErrorCode();
+
 			String rData = parameter;
 			System.err.println("organdata===>" + rData);
 
@@ -50,7 +59,7 @@ public class ParseOrganXML {
 
 			// 에러 향후 재처리
 			if (!respCd.equals("02") && !respCd.equals("00")) {
-				String errorMessage = String.format("%s", respCd.toString());
+				String errorMessage = String.format("%s:%s", respCd, errorcode.get(respCd));
 				throw new Exception(errorMessage);
 			}
 
@@ -63,6 +72,7 @@ public class ParseOrganXML {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new Exception(e);
 		}
 	}
 

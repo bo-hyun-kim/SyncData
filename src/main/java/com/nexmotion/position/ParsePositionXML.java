@@ -8,9 +8,14 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import com.nexmotion.account.Account;
+import com.nexmotion.code.ErrorCode;
 import com.nexmotion.organ.Organ;
+import com.nexmotion.organ.ParseOrganXML;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -25,9 +30,13 @@ public class ParsePositionXML {
   @Autowired
   private PositionService positionService;
 
-  public void parsePositionData(String parameter) {
+  private final Logger logger = LoggerFactory.getLogger(ParsePositionXML.class);
+
+  public void parsePositionData(String parameter) throws Exception{
 
     try {
+      ErrorCode errorcode = new ErrorCode();
+
       String rData = parameter;
       System.err.println("positiondata===>" + rData);
 
@@ -51,7 +60,7 @@ public class ParsePositionXML {
 
       // 에러 향후 재처리
       if (!respCd.equals("02") && !respCd.equals("00")) {
-        String errorMessage = String.format("%s", respCd.toString());
+        String errorMessage = String.format("%s:%s", respCd, errorcode.get(respCd));
         throw new Exception(errorMessage);
       }
 
@@ -65,6 +74,7 @@ public class ParsePositionXML {
 
     } catch (Exception e) {
       e.printStackTrace();
+      throw new Exception(e);
     }
   }
 

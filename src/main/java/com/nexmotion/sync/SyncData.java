@@ -50,7 +50,7 @@ public class SyncData {
     @Autowired
     private DeleteDataService deleteDataService;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void sync() throws Exception {
 
         SyncVO sync = new SyncVO();
@@ -59,7 +59,6 @@ public class SyncData {
         dateInfo = syncService.getChgDate();
 
         LocalDateTime startDt = dateInfo.get(0).getChgstartdate();
-//        System.err.println("startDt===>"+startDt);
 
         if (startDt == null) {
             logger.info("truncate all tables");
@@ -84,6 +83,7 @@ public class SyncData {
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("ERROR_SYNC()");
+            throw new Exception(e);
         }
 
         // return 한 값으로 에러 처리 필요
@@ -95,20 +95,20 @@ public class SyncData {
 
         LocalDate now = LocalDate.now();
 
-//        if (now.getDayOfYear() == 255) { //9월12일로 설정. 1로 설정시 1월1일
-//            System.err.println("DataDeleteStart");
-//            //System.err.println("minusyears: " + now.minusYears(3));
-//            //now.minusYears(3);
-//            String dateToString = now.minusYears(3).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-//            DeleteData deletedata = new DeleteData();
-//            deletedata.setThresholdDate(dateToString);
-//            try {
-//                deleteDataService.deletedata(deletedata);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                System.err.println("failed");
-//            }
-//            System.err.println("success");
-//        }
+        if (now.getDayOfYear() == 255) { //9월12일로 설정. 1로 설정시 1월1일
+            System.err.println("DataDeleteStart");
+            //System.err.println("minusyears: " + now.minusYears(3));
+            //now.minusYears(3);
+            String dateToString = now.minusYears(3).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            DeleteData deletedata = new DeleteData();
+            deletedata.setThresholdDate(dateToString);
+            try {
+                deleteDataService.deletedata(deletedata);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("failed");
+            }
+            System.err.println("success");
+        }
     }
 }

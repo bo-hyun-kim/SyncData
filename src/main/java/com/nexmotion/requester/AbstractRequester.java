@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -164,8 +165,7 @@ public abstract class AbstractRequester {
 		return todayStr;
 	}
 
-	
-	public boolean run(LocalDateTime startDt, LocalDateTime endDt, int code) {
+	public boolean run(LocalDateTime startDt, LocalDateTime endDt, int code) throws Exception {
 //		initVariable();
 //		System.err.println("시간 파라미터 확인===>"+ startDt + endDt);
 		chgStartDttm = endDt;
@@ -203,9 +203,8 @@ public abstract class AbstractRequester {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				// 에러로그를 기록
-				logger.error("ERROR_SERVICE(parseError)", e);
-				// DB Rollback
-				return false;
+				logger.error("ERROR_RUN()", e);
+				throw new Exception();
 			}
 			
 			if (!respCd.equals("02"))
