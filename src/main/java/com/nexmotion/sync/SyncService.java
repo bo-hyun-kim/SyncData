@@ -32,4 +32,9 @@ public class SyncService implements SyncMapper{
         syncMapper.truncateOraganization();
     }
 
+    @Override
+    public void truncatePosition() throws SQLException {
+        syncMapper.truncatePosition();
+    }
+
 }
