@@ -1,5 +1,6 @@
 package com.nexmotion.sync;
 
+import com.nexmotion.deletedata.DeleteDataService;
 import com.nexmotion.requester.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import com.nexmotion.deletedata.DeleteData;
+import com.nexmotion.deletedata.DeleteDataService;
+
+import org.springframework.cglib.core.Local;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Component
 public class SyncData {
@@ -40,6 +47,8 @@ public class SyncData {
     @Autowired
     private  PositionRequester positionRequester;
 
+    @Autowired
+    private DeleteDataService deleteDataService;
 
     @Transactional
     public void sync() throws Exception {
@@ -83,5 +92,22 @@ public class SyncData {
 
         sync.setChgstartdate(endDt);
         syncService.updateChgDate(sync);
+
+        LocalDate now = LocalDate.now();
+        if (now.getDayOfYear() == 255) { //9월12일로 설정. 1로 설정시 1월1일
+            System.err.println("DataDeleteStart");
+            //System.err.println("minusyears: " + now.minusYears(3));
+            //now.minusYears(3);
+            String dateToString = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            DeleteData deletedata = new DeleteData();
+            deletedata.setThresholdDate(dateToString);
+            try {
+                deleteDataService.deletedata(deletedata);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("failed");
+            }
+            System.err.println("success");
+        }
     }
 }
