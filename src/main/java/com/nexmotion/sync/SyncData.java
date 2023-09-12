@@ -64,8 +64,9 @@ public class SyncData {
         if (startDt == null) {
             logger.info("truncate all tables");
             //실제로 지금 계정 테이블이랑 조직 테이블 샘플 데이터가 truncate 되면 안되니까 일단 주석처리 해놓음
-//            syncService.truncateAccount();
-//            syncService.truncateOraganization();
+            //syncService.truncateAccount();
+            //syncService.truncateOraganization();
+            //syncService.truncatePosition();
             startDt = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
         }
 

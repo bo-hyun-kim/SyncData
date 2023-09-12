@@ -35,5 +35,9 @@
            TABLE VI_GVOF_MS
     </delete>
 
-
+    <delete id="truncatePosition">
+        /*ManagerMapper.truncatePosition Query*/
+        TRUNCATE
+           TABLE VI_CNM_CD
+    </delete>
 </mapper>

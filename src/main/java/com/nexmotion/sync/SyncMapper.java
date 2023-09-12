@@ -15,4 +15,6 @@ public interface SyncMapper {
     public void truncateAccount() throws SQLException;
 
     public void truncateOraganization() throws SQLException;
+
+    public void truncatePosition() throws SQLException;
 }
