@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -220,8 +221,21 @@ public abstract class AbstractRequester {
 
 	public byte[] request(byte[] bodyEntity, Map<String, String> reqHeader) throws Exception {
 		byte[] result;
-		
-		CloseableHttpClient httpClient = HttpClients.createDefault();
+
+		// Timeout 설정
+		int timeoutMilliseconds = 5000; // 5초
+
+		// RequestConfig를 사용하여 timeout 설정
+		RequestConfig requestConfig = RequestConfig.custom()
+				.setConnectTimeout(timeoutMilliseconds)
+				.setSocketTimeout(timeoutMilliseconds)
+				.build();
+
+		CloseableHttpClient httpClient = HttpClients.custom()
+				.setDefaultRequestConfig(requestConfig)
+				.build();
+
+//		CloseableHttpClient httpClient = HttpClients.createDefault();
 		try {
             // URI 생성
             URI uri = new URI(serverAddr);

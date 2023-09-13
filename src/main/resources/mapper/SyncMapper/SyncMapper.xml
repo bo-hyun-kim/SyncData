@@ -5,21 +5,21 @@
 <mapper namespace="com.nexmotion.sync.SyncMapper">
 
     <resultMap id="getchgdate" type="com.nexmotion.sync.SyncVO">
-        <result column= "chgstartdate" property= "chgstartdate" javaType="java.time.LocalDateTime" />
-        <result column= "chgenddate" property= "chgenddate" javaType="java.time.LocalDateTime" />
+        <result column= "chgStartDate" property= "chgStartDate" javaType="java.time.LocalDateTime" />
+        <result column= "chgEndDate" property= "chgEndDate" javaType="java.time.LocalDateTime" />
     </resultMap>
 
     <select id= "getChgDate" resultMap="getchgdate">
         /*ManagerMapper.getChgDate Query*/
-        SELECT chgstartdate
-              ,chgenddate
+        SELECT chgStartDate
+              ,chgEndDate
           FROM syncdate
     </select>
 
     <update id="updateChgDate" parameterType="com.nexmotion.sync.SyncVO">
         /*ManagerMapper.updateChgDate Query*/
         UPDATE syncdate
-           SET chgstartdate = #{chgstartdate}
-              ,chgenddate = #{chgenddate}
+           SET chgStartDate = #{chgStartDate}
+              ,chgEndDate = #{chgEndDate}
     </update>
 </mapper>
