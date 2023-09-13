@@ -14,4 +14,5 @@ public class Account {
   private String cposcode;
   private String userstat;
   private String chgdate;
+  private String retireDate;
 }

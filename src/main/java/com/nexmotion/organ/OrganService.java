@@ -1,5 +1,6 @@
 package com.nexmotion.organ;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.nexmotion.account.Account;
@@ -19,21 +20,22 @@ public class OrganService implements OrganMapper {
   }
 
   @Override
-  @Transactional
   public void insertOrganList(List<Organ> list) throws Exception {
     organMapper.insertOrganList(list);
   }
 
   @Override
-  @Transactional
   public void updateOrgan(Organ organ) throws Exception {
     organMapper.updateOrgan(organ);
   }
 
   @Override
-  @Transactional
   public void insertOrgan(Organ organ) throws Exception {
     organMapper.insertOrgan(organ);
   }
 
+  @Override
+  public void truncateOragan() throws SQLException {
+    organMapper.truncateOragan();
+  }
 }

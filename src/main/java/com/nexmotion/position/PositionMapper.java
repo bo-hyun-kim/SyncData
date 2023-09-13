@@ -1,5 +1,6 @@
 package com.nexmotion.position;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.nexmotion.account.Account;
@@ -17,5 +18,6 @@ public interface PositionMapper {
 
   public void updatePosition(Position position) throws Exception;
 
+  public void truncatePosition() throws SQLException;
 
 }

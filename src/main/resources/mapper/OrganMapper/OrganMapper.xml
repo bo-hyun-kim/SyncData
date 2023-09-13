@@ -15,7 +15,7 @@
 
   <insert id="insertOrganList" parameterType="java.util.List">
      /* OrganMapper.insertOrganList */
-     INSERT IGNORE
+     INSERT
        INTO VI_GVOF_MS
             (gvofcode
             ,gvofname
@@ -33,7 +33,7 @@
   </insert>
   <insert id="insertOrgan" parameterType="com.nexmotion.organ.Organ">
       /* OrganMapper.insertOrgan */
-        INSERT IGNORE
+        INSERT
           INTO VI_GVOF_MS
                (gvofcode
                ,gvofname
@@ -62,4 +62,10 @@
             ,chgdate = #{chgdate}
        WHERE gvofcode = #{gvofcode}
   </update>
+
+    <delete id="truncateOrgan">
+        /*OrganMapper.truncateOrgan Query*/
+        TRUNCATE
+            TABLE VI_GVOF_MS
+    </delete>
 </mapper>

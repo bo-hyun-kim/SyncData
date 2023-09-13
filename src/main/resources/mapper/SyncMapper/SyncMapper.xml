@@ -10,7 +10,7 @@
     </resultMap>
 
     <select id= "getChgDate" resultMap="getchgdate">
-        /*ManagerMapper.getchgdate Query*/
+        /*ManagerMapper.getChgDate Query*/
         SELECT chgstartdate
               ,chgenddate
           FROM syncdate
@@ -22,22 +22,4 @@
            SET chgstartdate = #{chgstartdate}
               ,chgenddate = #{chgenddate}
     </update>
-
-    <delete id="truncateAccount">
-        /*ManagerMapper.truncateAccount Query*/
-        TRUNCATE
-           TABLE account
-    </delete>
-
-    <delete id="truncateOrganization">
-        /*ManagerMapper.truncateOrganization Query*/
-        TRUNCATE
-           TABLE VI_GVOF_MS
-    </delete>
-
-    <delete id="truncatePosition">
-        /*ManagerMapper.truncatePosition Query*/
-        TRUNCATE
-           TABLE VI_CNM_CD
-    </delete>
 </mapper>

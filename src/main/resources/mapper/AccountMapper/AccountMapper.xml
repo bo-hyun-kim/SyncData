@@ -9,10 +9,7 @@
 
   <insert id="insertAccountList" parameterType="java.util.List">
        /* AccountMapper.insertAccountList */
-       /* 사용자 계정정보를 삭제하는 내용은
-        * 사용자계정정보 연계개발가이드 문서에 적혀있지 않기 때문에
-        * INSERT IGNORE 를 사용함 */
-       INSERT IGNORE
+       INSERT
          INTO account
              (userid
              ,userno
@@ -35,9 +32,32 @@
       </foreach>
   </insert>
 
+    <insert id="insertUseridAuthList" parameterType="java.util.List">
+        /* AccountMapper.insertUseridAuthList */
+        INSERT
+          INTO useridauth
+              (userid
+              ,isadmin
+              ,isimginform
+              ,isprivacy
+              ,isvideoinform
+              ,isexcept
+              ,isdestruction)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.userid}
+            ,0
+            ,0
+            ,0
+            ,0
+            ,0
+            ,0
+        </foreach>
+    </insert>
+
   <insert id="insertAccount" parameterType="com.nexmotion.account.Account">
       /* AccountMapper.insertAccount */
-    INSERT IGNORE
+    INSERT
       INTO account
            (userid
            ,userno
@@ -57,8 +77,8 @@
            ,#{chgdate})
   </insert>
 
-  <insert id="insertUseridauth" parameterType="com.nexmotion.account.Account">
-      /* AccountMapper.insertUseridauth */
+  <insert id="insertUseridAuth" parameterType="com.nexmotion.account.Account">
+      /* AccountMapper.insertUseridAuth */
     INSERT IGNORE
       INTO useridauth
            (userid
@@ -98,4 +118,35 @@
           ,chgdate = #{chgdate}
      WHERE userid = #{userid}
   </update>
+
+    <delete id="deleteRetireAccount" parameterType="com.nexmotion.account.Account">
+        /*AccountMapper.deleteRetireAccount*/
+        DELETE
+          FROM account
+         WHERE userstat = '03'
+           AND chgdate <![CDATA[<=]]> #{retireDate}
+    </delete>
+
+    <delete id="deleteRetireUseridAuth" parameterType="com.nexmotion.account.Account">
+        /*AccountMapper.deleteRetireUseridAuth*/
+        DELETE
+          FROM useridauth
+         WHERE userid = (SELECT userid
+                           FROM account
+                          WHERE userstat = '03'
+                            AND chgdate <![CDATA[<=]]> #{retireDate})
+    </delete>
+
+    <delete id="truncateAccount">
+        /*AccountMapper.truncateAccount Query*/
+        TRUNCATE
+            TABLE account
+    </delete>
+
+    <delete id="truncateUseridAuth">
+        /*AccountMapper.truncateUseridAuth Query*/
+        TRUNCATE
+            TABLE useridauth
+    </delete>
+
 </mapper>

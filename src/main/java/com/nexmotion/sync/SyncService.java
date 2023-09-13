@@ -22,19 +22,4 @@ public class SyncService implements SyncMapper{
         syncMapper.updateChgDate(sync);
     }
 
-    @Override
-    public void truncateAccount() throws SQLException {
-        syncMapper.truncateAccount();
-    }
-
-    @Override
-    public void truncateOraganization() throws SQLException {
-        syncMapper.truncateOraganization();
-    }
-
-    @Override
-    public void truncatePosition() throws SQLException {
-        syncMapper.truncatePosition();
-    }
-
 }

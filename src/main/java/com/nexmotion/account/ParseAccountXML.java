@@ -69,6 +69,7 @@ public class ParseAccountXML {
 
             if (existingData.size() == 0) {
                 accountService.insertAccountList(newData);
+                accountService.insertUseridAuthList(newData);
             } else {
                 compareData(newData, existingData);
             }

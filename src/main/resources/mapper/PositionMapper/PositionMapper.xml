@@ -9,7 +9,7 @@
 
   <insert id="insertPositionList" parameterType="java.util.List">
      /* positionMapper.insertPositionList */
-     INSERT IGNORE
+     INSERT
        INTO VI_CNM_CD
            (cnmcode
            ,cnmname
@@ -27,7 +27,7 @@
   </insert>
     <insert id="insertPosition" parameterType="com.nexmotion.position.Position">
         /* positionMapper.insertPosition */
-        INSERT IGNORE
+        INSERT
           INTO VI_CNM_CD
                (cnmcode
                ,cnmname
@@ -57,4 +57,10 @@
         SELECT cnmcode
           FROM VI_CNM_CD
     </select>
+
+    <delete id="truncatePosition">
+        /*positionMapper.truncatePosition Query*/
+        TRUNCATE
+            TABLE VI_CNM_CD
+    </delete>
 </mapper>

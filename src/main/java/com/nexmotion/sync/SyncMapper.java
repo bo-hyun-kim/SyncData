@@ -12,9 +12,4 @@ public interface SyncMapper {
 
     public void updateChgDate(SyncVO sync) throws SQLException;
 
-    public void truncateAccount() throws SQLException;
-
-    public void truncateOraganization() throws SQLException;
-
-    public void truncatePosition() throws SQLException;
 }

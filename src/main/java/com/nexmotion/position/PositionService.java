@@ -1,5 +1,6 @@
 package com.nexmotion.position;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.nexmotion.account.Account;
@@ -19,20 +20,22 @@ public class PositionService implements PositionMapper {
   }
 
   @Override
-  @Transactional
   public void insertPositionList(List<Position> list) throws Exception {
     positionMapper.insertPositionList(list);
   }
 
   @Override
-  @Transactional
   public void updatePosition(Position position) throws Exception {
     positionMapper.updatePosition(position);
   }
 
   @Override
-  @Transactional
   public void insertPosition(Position position) throws Exception {
     positionMapper.insertPosition(position);
+  }
+
+  @Override
+  public void truncatePosition() throws SQLException {
+    positionMapper.truncatePosition();
   }
 }

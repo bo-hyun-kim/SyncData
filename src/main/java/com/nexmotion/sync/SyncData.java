@@ -1,6 +1,9 @@
 package com.nexmotion.sync;
 
-import com.nexmotion.deletedata.DeleteDataService;
+import com.nexmotion.account.Account;
+import com.nexmotion.account.AccountService;
+import com.nexmotion.organ.OrganService;
+import com.nexmotion.position.PositionService;
 import com.nexmotion.requester.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import com.nexmotion.deletedata.DeleteData;
-import com.nexmotion.deletedata.DeleteDataService;
 
 import org.springframework.cglib.core.Local;
 import java.time.LocalDate;
@@ -28,6 +29,15 @@ public class SyncData {
 
     @Autowired
     private UserRequester userRequester;
+
+    @Autowired
+    private AccountService accountService;
+
+    @Autowired
+    private OrganService organService;
+
+    @Autowired
+    private PositionService positionService;
 
     @Autowired
     private OrganizationRequester organizationRequester;
@@ -47,9 +57,6 @@ public class SyncData {
     @Autowired
     private  PositionRequester positionRequester;
 
-    @Autowired
-    private DeleteDataService deleteDataService;
-
     @Transactional(rollbackFor = Exception.class)
     public void sync() throws Exception {
 
@@ -58,19 +65,20 @@ public class SyncData {
 
         dateInfo = syncService.getChgDate();
 
-        LocalDateTime startDt = dateInfo.get(0).getChgstartdate();
+        LocalDateTime startDt = dateInfo.get(0).getChgStartDate();
 
         if (startDt == null) {
             logger.info("truncate all tables");
             //실제로 지금 계정 테이블이랑 조직 테이블 샘플 데이터가 truncate 되면 안되니까 일단 주석처리 해놓음
-            //syncService.truncateAccount();
-            //syncService.truncateOraganization();
-            //syncService.truncatePosition();
+//            accountService.truncateAccount();
+//            organService.truncateOragan();
+//            positionService.truncatePosition();
+//              syncService.truncateUseridAuth();
             startDt = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
         }
 
         LocalDateTime endDt = LocalDateTime.now();
-        sync.setChgenddate(endDt);
+        sync.setChgEndDate(endDt);
 
         try {
             userRequester.run(startDt, endDt, 1);
@@ -91,20 +99,25 @@ public class SyncData {
 
         endDt = endDt.plusSeconds(1);
 
-        sync.setChgstartdate(endDt);
+        sync.setChgStartDate(endDt);
         syncService.updateChgDate(sync);
 
         LocalDate now = LocalDate.now();
 
-        if (now.getDayOfYear() == 255) { //9월12일로 설정. 1로 설정시 1월1일
+        if (now.getDayOfYear() == 256) { //9월13일로 설정. 1로 설정시 1월1일
             System.err.println("DataDeleteStart");
-            //System.err.println("minusyears: " + now.minusYears(3));
-            //now.minusYears(3);
-            String dateToString = now.minusYears(3).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            DeleteData deletedata = new DeleteData();
-            deletedata.setThresholdDate(dateToString);
+            // 3년 전으로 이동하고 자정으로 설정
+            LocalDate threeYearsAgo = now.minusYears(3).atStartOfDay().toLocalDate();
+            System.err.println("threeYearsAgo==>"+threeYearsAgo);
+            // "yyyy-MM-dd" 형식의 문자열로 변환
+            String dateToString = threeYearsAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " 23:59:59";
+            System.err.println("dateToString==>"+dateToString);
+
+            Account account = new Account();
+            account.setRetireDate(dateToString);
             try {
-                deleteDataService.deletedata(deletedata);
+                accountService.deleteRetireAccount(account);
+                accountService.deleteRetireUseridAuth(account);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.err.println("failed");
