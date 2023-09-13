@@ -56,6 +56,29 @@
            ,#{userstat}
            ,#{chgdate})
   </insert>
+
+  <insert id="insertUseridauth" parameterType="com.nexmotion.account.Account">
+      /* AccountMapper.insertUseridauth */
+    INSERT IGNORE
+      INTO useridauth
+           (userid
+           ,isadmin
+           ,isimginform
+           ,isprivacy
+           ,isvideoinform
+           ,isexcept
+           ,isdestruction
+           )
+    VALUES (#{userid}
+           ,0
+           ,0
+           ,0
+           ,0
+           ,0
+           ,0
+           )
+  </insert>
+
   <select id="selectAccount" parameterType="com.nexmotion.account.Account" resultMap="account">
       /* AccountMapper.selectAccount */
     SELECT userid

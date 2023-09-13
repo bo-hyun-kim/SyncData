@@ -27,6 +27,12 @@ public class AccountService implements AccountMapper {
 	}
 
 	@Override
+	@Transactional
+	public void insertUseridAuth(Account account) throws Exception {
+		accountMapper.insertUseridAuth(account);
+	}
+
+	@Override
 	public List<Account> selectAccount() throws Exception {
 		return accountMapper.selectAccount();
 	}

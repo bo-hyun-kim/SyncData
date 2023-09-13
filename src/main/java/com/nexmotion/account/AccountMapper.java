@@ -11,6 +11,8 @@ public interface AccountMapper {
 
   public void insertAccount(Account account) throws Exception;
 
+  public void insertUseridAuth(Account account) throws Exception;
+
   public List<Account> selectAccount() throws Exception;
 
   public void updateAccount(Account account) throws Exception;

@@ -155,6 +155,7 @@ public class ParseAccountXML {
             }
             if (!found) {
                 accountService.insertAccount(newAccount);
+                accountService.insertUseridAuth(newAccount);
             }
         }
     }
