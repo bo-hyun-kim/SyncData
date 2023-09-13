@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AccountService implements AccountMapper {
@@ -58,6 +56,7 @@ public class AccountService implements AccountMapper {
 	public void deleteRetireAccount(Account account) throws SQLException {
 		accountMapper.deleteRetireAccount(account);
 	}
+	
 	@Override
 	public void deleteRetireUseridAuth(Account account) throws SQLException {
 		accountMapper.deleteRetireUseridAuth(account);

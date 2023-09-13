@@ -32,7 +32,7 @@ public class ParseAccountXML {
     //리턴값 : false - 추가 요청 정지
     //리턴값 : true - 추가 요청
 
-    public void parseAccountData(String parameter) throws Exception{
+    public void parseAccountData(String parameter) throws Exception {
 
         try {
             ErrorCode errorcode = new ErrorCode();

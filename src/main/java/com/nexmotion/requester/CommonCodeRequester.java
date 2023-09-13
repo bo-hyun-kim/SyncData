@@ -13,4 +13,10 @@ public class CommonCodeRequester extends AbstractRequester{
     public String getQryPups() {
         return "공통코드 데이터 동기화";
     }
+
+	@Override
+	public void parse(String response) throws Exception {
+		// 현재는 사용하지 않음.
+		return;
+	}
 }

@@ -34,25 +34,7 @@ public class SyncData {
     private AccountService accountService;
 
     @Autowired
-    private OrganService organService;
-
-    @Autowired
-    private PositionService positionService;
-
-    @Autowired
     private OrganizationRequester organizationRequester;
-
-    @Autowired
-    private UserComplainRequester userComplainRequester;
-
-    @Autowired
-    private CommonCodeRequester commonCodeRequester;
-
-    @Autowired
-    private JobGradeRequester jobGradeRequester;
-
-    @Autowired
-    private OrganRecordRequester organRecordRequester;
 
     @Autowired
     private  PositionRequester positionRequester;
@@ -61,13 +43,11 @@ public class SyncData {
     public void sync() throws Exception {
 
         SyncVO sync = new SyncVO();
-        List<SyncVO> dateInfo = new ArrayList<>();
-
-        dateInfo = syncService.getChgDate();
-
+        List<SyncVO> dateInfo = syncService.getChgDate();
         LocalDateTime startDt = dateInfo.get(0).getChgStartDate();
 
         if (startDt == null) {
+        	// 처음 데이터를 가져오는 경우 모든 데이터를 삭제한다
             logger.info("truncate all tables");
             //실제로 지금 계정 테이블이랑 조직 테이블 샘플 데이터가 truncate 되면 안되니까 일단 주석처리 해놓음
 //            accountService.truncateAccount();
@@ -80,20 +60,13 @@ public class SyncData {
         LocalDateTime endDt = LocalDateTime.now();
         sync.setChgEndDate(endDt);
 
-        try {
-            userRequester.run(startDt, endDt, 1);
+        userRequester.run(startDt, endDt);
 //            userComplainRequester.run(startDt, endDt, 1);
-            organizationRequester.run(startDt, endDt, 2);
+        organizationRequester.run(startDt, endDt);
 //            organRecordRequester.run(startDt, endDt, 2);
-            positionRequester.run(startDt, endDt, 3);
+        positionRequester.run(startDt, endDt);
 //            jobGradeRequester.run(startDt, endDt, 3);
 //            commonCodeRequester.run(startDt, endDt, 3);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error("ERROR_SYNC()");
-            throw new Exception(e);
-        }
 
         // return 한 값으로 에러 처리 필요
 

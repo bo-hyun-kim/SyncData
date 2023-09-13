@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5level] %logger{36} - %msg%n</Pattern>
+        </layout>
+    </appender>    
+    <appender name="APP" class="ch.qos.logback.core.rolling.RollingFileAppender">        
+        <file>${LOG_PATH}/app/app.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss:%-3relative} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/app/app.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>50MB</maxFileSize>
+                <!-- kb, mb, gb -->
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+    <appender name="LOG_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">        
+        <file>${LOG_PATH}/error/critical.log</file>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+        	<!-- 에러를 호출한 클래스와 메소드도 함께 출력 -->
+        	<includeCallerData>true</includeCallerData>
+        	<!-- 호스트명을 기록하기 위해 아래의 옵션을 사용 -->
+        	<includeContext>false</includeContext>
+    		<customFields>{"hostname":"${HOSTNAME}"}</customFields>          
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/error/critical.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>50MB</maxFileSize>
+                <!-- kb, mb, gb -->
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>100</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+    <appender name="LOG_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/info/info.log</file>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <!-- 로그를 호출한 클래스와 메소드도 함께 출력 -->
+            <includeCallerData>true</includeCallerData>
+            <!-- 호스트명을 기록하기 위해 아래의 옵션을 사용 -->
+            <includeContext>false</includeContext>
+            <customFields>{"hostname":"${HOSTNAME}"}</customFields>          
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/info/info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>50MB</maxFileSize>
+                <!-- kb, mb, gb -->
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>100</maxHistory>
+        </rollingPolicy>        
+    </appender>
+    
+    <logger name="com.nexmotion.info" level="INFO" additivity="false">
+    	<!-- com.nexmotion.info 로그는 LOG_INFO appender 만 사용하고, root 로거는 상속 받지 않음(additivity=false) -->
+    	<!-- private Logger logger = LoggerFactory.getLogger("com.nexmotion.info"); -->
+        <appender-ref ref="LOG_INFO" />
+    </logger>
+    
+    <logger name="com.nexmotion.error" level="INFO" additivity="false">
+    	<!-- com.nexmotion.error 로그는 LOG_ERROR appender 만 사용하고, root 로거는 상속 받지 않음(additivity=false) -->
+    	<!-- private Logger logger = LoggerFactory.getLogger("com.nexmotion.error"); -->    	
+        <appender-ref ref="LOG_ERROR" />
+        <appender-ref ref="STDOUT" />
+    </logger>
+    
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="APP" />
+    </root>
+</configuration>

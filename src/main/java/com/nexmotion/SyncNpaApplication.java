@@ -14,7 +14,7 @@ import com.nexmotion.requester.UserRequester;
 @SpringBootApplication
 public class SyncNpaApplication implements CommandLineRunner {
 
-	private final Logger LOGGER = LoggerFactory.getLogger(SyncNpaApplication.class);
+	private final Logger logger = LoggerFactory.getLogger(SyncNpaApplication.class);
 
 	@Autowired
 	private SyncData syncData;
@@ -25,12 +25,13 @@ public class SyncNpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-
+		logger.info("start sync");
 		try {
 			syncData.sync();
 		} catch (Exception e) {
-			LOGGER.error("ERROR_sync()", e);
+			logger.error("ERROR_sync()", e);
 		}
+		logger.info("end sync");
 
 	}
 }

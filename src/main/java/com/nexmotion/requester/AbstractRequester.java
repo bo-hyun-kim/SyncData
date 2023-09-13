@@ -58,15 +58,6 @@ public abstract class AbstractRequester {
 	@Value("${blg.agfc.gvofcd}")
 	private String blgAgfcGvofCd;
 
-	@Autowired
-	ParseAccountXML parseAccountXML;
-
-	@Autowired
-	ParseOrganXML parseOrganXML;
-
-	@Autowired
-	ParsePositionXML parsePositionXML;
-
 	protected AbstractRequester() {
 	}
 
@@ -75,6 +66,9 @@ public abstract class AbstractRequester {
 
 	// 조회시스템명 반환
 	public abstract String getQryPups();
+	
+	// 파싱 및 DB 저장
+	public abstract void parse(String response) throws Exception;
 	
 	// 요청페이지(최초요청에서는 1, 응답코드가 02(다음자료있음)일 때 다음페이지 입력)
 	private int page = 1;
@@ -165,47 +159,27 @@ public abstract class AbstractRequester {
 		return todayStr;
 	}
 
-	public boolean run(LocalDateTime startDt, LocalDateTime endDt, int code) throws Exception {
+	public boolean run(LocalDateTime startDt, LocalDateTime endDt) throws Exception {
 //		initVariable();
 //		System.err.println("시간 파라미터 확인===>"+ startDt + endDt);
-		chgStartDttm = endDt;
-		chgEndDttm = startDt;
+		this.chgStartDttm = endDt;
+		this.chgEndDttm = startDt;
 		RequestDTO dto = getRequestDTO();
 //		System.err.println("dto확인 ===>"+ dto);
 		String respCd = null;
 
 		do {
-			try {
-				String response = this.send(dto);
+			String response = this.send(dto);
 
-				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder builder = factory.newDocumentBuilder();
-				Document doc = builder.parse(new InputSource(new StringReader(response)));
-				Element rootElement = doc.getDocumentElement();
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document doc = builder.parse(new InputSource(new StringReader(response)));
+			Element rootElement = doc.getDocumentElement();
 
-				respCd = rootElement.getElementsByTagName("RESP_CD").item(0).getTextContent();
+			respCd = rootElement.getElementsByTagName("RESP_CD").item(0).getTextContent();
 
-				// 실제 db 에 response 결과값을 파싱해서 저장
-				switch (code) {
-					case 1:
-						parseAccountXML.parseAccountData(response);
-						break;
-					case 2:
-						parseOrganXML.parseOrganData(response);
-						break;
-					case 3:
-						parsePositionXML.parsePositionData(response);
-						break;
-					default:
-						break;
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				// 에러로그를 기록
-				logger.error("ERROR_RUN()", e);
-				throw new Exception();
-			}
+			// 실제 db 에 response 결과값을 파싱해서 저장
+			this.parse(response);
 			
 			if (!respCd.equals("02"))
 				break;
