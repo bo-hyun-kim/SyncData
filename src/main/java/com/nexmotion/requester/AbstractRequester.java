@@ -12,6 +12,7 @@ import java.util.Map;
 import com.nexmotion.account.ParseAccountXML;
 import com.nexmotion.organ.ParseOrganXML;
 import com.nexmotion.position.ParsePositionXML;
+import com.util.crypto.SEEDCryptography;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.httpclient.HttpStatus;
 import java.net.URI;
@@ -58,6 +59,9 @@ public abstract class AbstractRequester {
 	
 	@Value("${blg.agfc.gvofcd}")
 	private String blgAgfcGvofCd;
+
+	@Value("${encryption.key}")
+	private String encryptionKey;
 
 	protected AbstractRequester() {
 	}
@@ -208,12 +212,10 @@ public abstract class AbstractRequester {
 		Map<String, String> reqHeader = getHeader(dto.getQryPups());
 		String reqBody = getData(dto);
 
-		/*
-		 * SEEDCryptography seedCrypto = new
-		 * SEEDCryptography("X124214124214214214124124XXXX"); // 암호화키 byte[] result =
-		 * requester.request(seedCrypto.encrypt(testXml.getBytes()), reqHeader);
-		 */
-		byte[] result = request(reqBody.getBytes(), reqHeader);
+		SEEDCryptography seedCrypto = new SEEDCryptography(encryptionKey); // 암호화키
+
+		byte[] result = request(seedCrypto.encrypt(reqBody.getBytes()), reqHeader);
+//		byte[] result = request(reqBody.getBytes(), reqHeader);
 		ret = new String(result, StandardCharsets.UTF_8);
 		
 		return ret;
@@ -249,9 +251,9 @@ public abstract class AbstractRequester {
 			}
 			HttpResponse response = httpClient.execute(postMethod);
 
-			for (Header header : response.getAllHeaders()) {
-				System.out.println("name : " + header.getName() + ", value : " + header.getValue());
-			}
+//			for (Header header : response.getAllHeaders()) {
+//				System.out.println("name : " + header.getName() + ", value : " + header.getValue());
+//			}
 
 			result = FileCopyUtils.copyToByteArray(response.getEntity().getContent());
 			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK)
