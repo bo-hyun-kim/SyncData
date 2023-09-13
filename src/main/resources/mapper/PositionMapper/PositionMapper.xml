@@ -3,28 +3,29 @@
      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nexmotion.position.PositionMapper">
+
     <resultMap id="position" type="com.nexmotion.position.Position">
         <id column="cnmcode" property="cnmcode" />
     </resultMap>
 
-  <insert id="insertPositionList" parameterType="java.util.List">
-     /* positionMapper.insertPositionList */
-     INSERT
-       INTO VI_CNM_CD
-           (cnmcode
-           ,cnmname
-           ,grpcode
-           ,chgdate
-           ,useyn)
-     VALUES
-     <foreach collection="list" item="item" index="index" separator=",">
-           (#{item.cnmcode}
-           ,#{item.cnmname}
-           ,#{item.grpcode}
-           ,#{item.chgdate}
-           ,#{item.useyn})
-     </foreach>
-  </insert>
+    <insert id="insertPositionList" parameterType="java.util.List">
+        /* positionMapper.insertPositionList */
+        INSERT
+          INTO VI_CNM_CD
+              (cnmcode
+              ,cnmname
+              ,grpcode
+              ,chgdate
+              ,useyn)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.cnmcode}
+              ,#{item.cnmname}
+              ,#{item.grpcode}
+              ,#{item.chgdate}
+              ,#{item.useyn})
+        </foreach>
+    </insert>
     <insert id="insertPosition" parameterType="com.nexmotion.position.Position">
         /* positionMapper.insertPosition */
         INSERT
@@ -61,6 +62,6 @@
     <delete id="truncatePosition">
         /*positionMapper.truncatePosition Query*/
         TRUNCATE
-            TABLE VI_CNM_CD
+           TABLE VI_CNM_CD
     </delete>
 </mapper>

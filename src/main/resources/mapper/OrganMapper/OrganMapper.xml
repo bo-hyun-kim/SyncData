@@ -3,6 +3,7 @@
      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nexmotion.organ.OrganMapper">
+
     <resultMap id="organ" type="com.nexmotion.organ.Organ">
         <id column="gvofcode" property="gvofcode" />
         <result column="gvofname" property="gvofname" />
@@ -13,55 +14,55 @@
         <result column="useyn" property="useyn" />
     </resultMap>
 
-  <insert id="insertOrganList" parameterType="java.util.List">
-     /* OrganMapper.insertOrganList */
-     INSERT
-       INTO VI_GVOF_MS
-            (gvofcode
-            ,gvofname
-            ,hgvofcode
-            ,useyn
-            ,chgdate)
-     VALUES
-     <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.gvofcode}
-            ,#{item.gvofname}
-            ,#{item.hgvofcode}
-            ,#{item.useyn}
-            ,#{item.chgdate})
-     </foreach>
-  </insert>
-  <insert id="insertOrgan" parameterType="com.nexmotion.organ.Organ">
-      /* OrganMapper.insertOrgan */
-        INSERT
-          INTO VI_GVOF_MS
-               (gvofcode
-               ,gvofname
-               ,hgvofcode
-               ,useyn
-               ,chgdate)
-        VALUES (#{gvofcode}
-               ,#{gvofname}
-               ,#{hgvofcode}
-               ,#{useyn}
-               ,#{chgdate})
-  </insert>
+    <insert id="insertOrganList" parameterType="java.util.List">
+       /* OrganMapper.insertOrganList */
+       INSERT
+         INTO VI_GVOF_MS
+              (gvofcode
+              ,gvofname
+              ,hgvofcode
+              ,useyn
+              ,chgdate)
+       VALUES
+       <foreach collection="list" item="item" index="index" separator=",">
+              (#{item.gvofcode}
+              ,#{item.gvofname}
+              ,#{item.hgvofcode}
+              ,#{item.useyn}
+              ,#{item.chgdate})
+       </foreach>
+    </insert>
+    <insert id="insertOrgan" parameterType="com.nexmotion.organ.Organ">
+        /* OrganMapper.insertOrgan */
+          INSERT
+            INTO VI_GVOF_MS
+                 (gvofcode
+                 ,gvofname
+                 ,hgvofcode
+                 ,useyn
+                 ,chgdate)
+          VALUES (#{gvofcode}
+                 ,#{gvofname}
+                 ,#{hgvofcode}
+                 ,#{useyn}
+                 ,#{chgdate})
+    </insert>
 
-  <select id="selectOrgan" resultMap="organ">
-    /* OrganMapper.selectOrgan */
-    SELECT gvofcode
-      FROM VI_GVOF_MS
-  </select>
-  <update id="updateOrgan" parameterType="com.nexmotion.organ.Organ">
-      /* OrganMapper.updateOrgan */
-      UPDATE VI_GVOF_MS
-         SET gvofcode = #{gvofcode}
-            ,gvofname = #{gvofname}
-            ,hgvofcode = #{hgvofcode}
-            ,useyn = #{useyn}
-            ,chgdate = #{chgdate}
-       WHERE gvofcode = #{gvofcode}
-  </update>
+    <select id="selectOrgan" resultMap="organ">
+      /* OrganMapper.selectOrgan */
+      SELECT gvofcode
+        FROM VI_GVOF_MS
+    </select>
+    <update id="updateOrgan" parameterType="com.nexmotion.organ.Organ">
+        /* OrganMapper.updateOrgan */
+        UPDATE VI_GVOF_MS
+           SET gvofcode = #{gvofcode}
+              ,gvofname = #{gvofname}
+              ,hgvofcode = #{hgvofcode}
+              ,useyn = #{useyn}
+              ,chgdate = #{chgdate}
+         WHERE gvofcode = #{gvofcode}
+    </update>
 
     <delete id="truncateOrgan">
         /*OrganMapper.truncateOrgan Query*/

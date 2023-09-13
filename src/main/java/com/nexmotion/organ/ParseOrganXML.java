@@ -20,7 +20,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.nexmotion.xmlUtil.XmlUtil;
 import org.xml.sax.InputSource;
 
 @Component
@@ -37,7 +36,7 @@ public class ParseOrganXML {
 			ErrorCode errorcode = new ErrorCode();
 
 			String rData = parameter;
-			System.err.println("organdata===>" + rData);
+			System.err.println("organData===>" + rData);
 
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
@@ -136,7 +135,6 @@ public class ParseOrganXML {
 			boolean found = false;
 			for (Organ existingOrgan : existingData) {
 				if (newOrgan.getGvofcode().equals(existingOrgan.getGvofcode())) {
-					System.err.println("겹치는 데이터" + newData);
 					organService.updateOrgan(newOrgan);
 					found = true;
 					break;

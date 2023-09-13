@@ -21,8 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.xml.sax.InputSource;
 
-import com.nexmotion.xmlUtil.XmlUtil;
-
 @Component
 public class ParseAccountXML {
 
@@ -40,7 +38,7 @@ public class ParseAccountXML {
             ErrorCode errorcode = new ErrorCode();
 
             String rData = parameter;
-            System.err.println("rdata===>" + rData);
+            System.err.println("accountData===>" + rData);
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();

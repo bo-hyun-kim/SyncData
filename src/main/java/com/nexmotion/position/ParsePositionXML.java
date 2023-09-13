@@ -21,7 +21,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.nexmotion.xmlUtil.XmlUtil;
 import org.xml.sax.InputSource;
 
 @Component
@@ -38,7 +37,7 @@ public class ParsePositionXML {
       ErrorCode errorcode = new ErrorCode();
 
       String rData = parameter;
-      System.err.println("positiondata===>" + rData);
+      System.err.println("positionData===>" + rData);
 
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       DocumentBuilder builder = factory.newDocumentBuilder();

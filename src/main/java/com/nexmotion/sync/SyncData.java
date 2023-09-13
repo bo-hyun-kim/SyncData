@@ -73,7 +73,7 @@ public class SyncData {
 //            accountService.truncateAccount();
 //            organService.truncateOragan();
 //            positionService.truncatePosition();
-//              syncService.truncateUseridAuth();
+//            syncService.truncateUseridAuth();
             startDt = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
         }
 
@@ -104,14 +104,17 @@ public class SyncData {
 
         LocalDate now = LocalDate.now();
 
+        deleteRetireUser(now);
+    }
+
+    public void deleteRetireUser(LocalDate now) {
         if (now.getDayOfYear() == 256) { //9월13일로 설정. 1로 설정시 1월1일
-            System.err.println("DataDeleteStart");
+
             // 3년 전으로 이동하고 자정으로 설정
             LocalDate threeYearsAgo = now.minusYears(3).atStartOfDay().toLocalDate();
-            System.err.println("threeYearsAgo==>"+threeYearsAgo);
+
             // "yyyy-MM-dd" 형식의 문자열로 변환
             String dateToString = threeYearsAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " 23:59:59";
-            System.err.println("dateToString==>"+dateToString);
 
             Account account = new Account();
             account.setRetireDate(dateToString);
