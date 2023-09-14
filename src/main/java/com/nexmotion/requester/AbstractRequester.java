@@ -215,9 +215,12 @@ public abstract class AbstractRequester {
 		SEEDCryptography seedCrypto = new SEEDCryptography(encryptionKey); // 암호화키
 
 		byte[] result = request(seedCrypto.encrypt(reqBody.getBytes()), reqHeader);
-//		byte[] result = request(reqBody.getBytes(), reqHeader);
-		ret = new String(result, StandardCharsets.UTF_8);
-		
+		System.out.println("복호화 전 데이터===>" + new String(result, StandardCharsets.UTF_8));
+		byte[] decytedResponse = seedCrypto.decrypt(result);
+		System.out.println("복호화 후 데이터==>" + new String(decytedResponse));
+
+		ret = new String(decytedResponse, StandardCharsets.UTF_8);
+		ret = ret.trim();
 		return ret;
 	}
 
@@ -241,7 +244,6 @@ public abstract class AbstractRequester {
 		try {
             // URI 생성
             URI uri = new URI(serverAddr);
-
 			HttpPost postMethod = new HttpPost(uri);
 			postMethod.setHeader("Content-Type", "application/xml; charset=UTF-8");
 			HttpEntity entity = new ByteArrayEntity(bodyEntity);
@@ -250,10 +252,6 @@ public abstract class AbstractRequester {
 				postMethod.addHeader(key, reqHeader.get(key));
 			}
 			HttpResponse response = httpClient.execute(postMethod);
-
-//			for (Header header : response.getAllHeaders()) {
-//				System.out.println("name : " + header.getName() + ", value : " + header.getValue());
-//			}
 
 			result = FileCopyUtils.copyToByteArray(response.getEntity().getContent());
 			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK)
