@@ -1,0 +1,165 @@
+2023-09-19 10:48:53,569 [main] INFO  com.nexmotion.SyncNpaApplication - Starting SyncNpaApplication using Java 11.0.16 on DESKTOP-FDLUG09 with PID 14028 (C:\Users\kbh51\OneDrive\문서\GitHub\SyncNPA\build\classes\java\main started by kbh51 in C:\Users\kbh51\OneDrive\문서\GitHub\SyncNPA)
+2023-09-19 10:48:53,571 [main] INFO  com.nexmotion.SyncNpaApplication - No active profile set, falling back to 1 default profile: "default"
+2023-09-19 10:48:53,958 [main] INFO  o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor - No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2023-09-19 10:48:53,967 [main] INFO  o.s.i.c.DefaultConfiguringBeanFactoryPostProcessor - No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2023-09-19 10:48:54,505 [main] INFO  o.s.i.endpoint.EventDrivenConsumer - Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2023-09-19 10:48:54,505 [main] INFO  o.s.i.c.PublishSubscribeChannel - Channel 'application.errorChannel' has 1 subscriber(s).
+2023-09-19 10:48:54,505 [main] INFO  o.s.i.endpoint.EventDrivenConsumer - started bean '_org.springframework.integration.errorLogger'
+2023-09-19 10:48:54,514 [main] INFO  com.nexmotion.SyncNpaApplication - Started SyncNpaApplication in 1.288 seconds (JVM running for 2.112)
+2023-09-19 10:48:54,516 [main] INFO  com.nexmotion.SyncNpaApplication - start sync
+2023-09-19 10:48:54,519 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-09-19 10:48:54,660 [main] INFO  log4jdbc.log4j2 - 1. Connection opened. {executed in 130ms} 
+2023-09-19 10:48:54,661 [main] INFO  log4jdbc.log4j2 - 1. Connection.new Connection returned 
+2023-09-19 10:48:54,661 [main] INFO  log4jdbc.log4j2 - 1. Connection.getNetworkTimeout() returned 0
+2023-09-19 10:48:54,661 [main] INFO  log4jdbc.log4j2 - 1. Connection.isReadOnly() returned false
+2023-09-19 10:48:54,661 [main] INFO  log4jdbc.log4j2 - 1. Connection.getAutoCommit() returned true
+2023-09-19 10:48:54,663 [main] INFO  log4jdbc.log4j2 - 1. Connection.isValid(1) returned true
+2023-09-19 10:48:54,666 [main] INFO  log4jdbc.log4j2 - 1. Connection.getTransactionIsolation() returned 4
+2023-09-19 10:48:54,667 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-09-19 10:48:54,670 [main] INFO  log4jdbc.log4j2 - 1. Connection.getAutoCommit() returned true
+2023-09-19 10:48:54,673 [main] INFO  log4jdbc.log4j2 - 1. Connection.setAutoCommit(false) returned 
+2023-09-19 10:48:54,685 [main] INFO  log4jdbc.log4j2 - 1. Connection.getAutoCommit() returned false
+2023-09-19 10:48:54,692 [main] INFO  log4jdbc.log4j2 - 1. PreparedStatement.new PreparedStatement returned 
+2023-09-19 10:48:54,693 [main] INFO  log4jdbc.log4j2 - 1. Connection.prepareStatement(/*ManagerMapper.getChgDate Query*/
+        SELECT chgStartDate
+              ,chgEndDate
+          FROM syncdate) returned net.sf.log4jdbc.sql.jdbcapi.PreparedStatementSpy@644d1b61
+2023-09-19 10:48:54,703 [main] INFO  log4jdbc.log4j2 - 1. /*ManagerMapper.getChgDate Query*/ SELECT chgStartDate ,chgEndDate FROM syncdate  {executed in 8 ms}
+2023-09-19 10:48:54,703 [main] INFO  log4jdbc.log4j2 - 1. PreparedStatement.execute() returned true
+2023-09-19 10:48:54,704 [main] INFO  log4jdbc.log4j2 - 1. ResultSet.new ResultSet returned 
+2023-09-19 10:48:54,705 [main] INFO  log4jdbc.log4j2 - 1. PreparedStatement.getResultSet() returned net.sf.log4jdbc.sql.jdbcapi.ResultSetSpy@3fdcde7a
+2023-09-19 10:48:54,707 [main] INFO  log4jdbc.log4j2 - 1. ResultSet.getMetaData() returned com.mysql.cj.jdbc.result.ResultSetMetaData@2f995afc - Field level information: 
+	com.mysql.cj.result.Field@377949f1[dbName=npa,tableName=syncdate,originalTableName=syncdate,columnName=chgStartDate,originalColumnName=chgstartdate,mysqlType=12(FIELD_TYPE_DATETIME),sqlType=93,flags= BINARY, charsetIndex=63, charsetName=ISO-8859-1]
+	com.mysql.cj.result.Field@9df564f[dbName=npa,tableName=syncdate,originalTableName=syncdate,columnName=chgEndDate,originalColumnName=chgenddate,mysqlType=12(FIELD_TYPE_DATETIME),sqlType=93,flags= BINARY, charsetIndex=63, charsetName=ISO-8859-1]
+2023-09-19 10:48:54,708 [main] INFO  log4jdbc.log4j2 - 1. ResultSet.getType() returned 1003
+2023-09-19 10:48:54,708 [main] INFO  log4jdbc.log4j2 - 1. ResultSet.isClosed() returned false
+2023-09-19 10:48:54,708 [main] INFO  log4jdbc.log4j2 - 1. ResultSet.next() returned true
+2023-09-19 10:48:54,710 [main] INFO  log4jdbc.log4j2 - 1. ResultSet.getObject(chgStartDate,class java.time.LocalDateTime) returned 2023-09-18T16:38:01
+2023-09-19 10:48:54,710 [main] INFO  log4jdbc.log4j2 - 1. ResultSet.getObject(chgEndDate,class java.time.LocalDateTime) returned 2023-09-18T16:38
+2023-09-19 10:48:54,711 [main] INFO  log4jdbc.log4j2 - 1. ResultSet.isClosed() returned false
+2023-09-19 10:48:54,712 [main] INFO  log4jdbc.log4j2 - 
+|-------------|-----------|
+|chgstartdate |chgenddate |
+|-------------|-----------|
+|-------------|-----------|
+
+2023-09-19 10:48:54,712 [main] INFO  log4jdbc.log4j2 - 1. ResultSet.next() returned false
+2023-09-19 10:48:54,712 [main] INFO  log4jdbc.log4j2 - 1. ResultSet.close() returned void
+2023-09-19 10:48:54,712 [main] INFO  log4jdbc.log4j2 - 1. Connection.getMetaData() returned com.mysql.cj.jdbc.DatabaseMetaData@27960b1e
+2023-09-19 10:48:54,714 [main] INFO  log4jdbc.log4j2 - 1. PreparedStatement.getMoreResults() returned false
+2023-09-19 10:48:54,715 [main] INFO  log4jdbc.log4j2 - 1. PreparedStatement.getUpdateCount() returned -1
+2023-09-19 10:48:54,715 [main] INFO  log4jdbc.log4j2 - 1. PreparedStatement.close() returned 
+2023-09-19 10:48:54,813 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 2. Connection opened. {executed in 43ms} 
+2023-09-19 10:48:54,815 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 2. Connection.new Connection returned 
+2023-09-19 10:48:54,815 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 2. Connection.isReadOnly() returned false
+2023-09-19 10:48:54,815 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 2. Connection.getAutoCommit() returned true
+2023-09-19 10:48:54,832 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 3. Connection opened. {executed in 16ms} 
+2023-09-19 10:48:54,832 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 3. Connection.new Connection returned 
+2023-09-19 10:48:54,832 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 3. Connection.isReadOnly() returned false
+2023-09-19 10:48:54,832 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 3. Connection.getAutoCommit() returned true
+2023-09-19 10:48:54,849 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 4. Connection opened. {executed in 17ms} 
+2023-09-19 10:48:54,849 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 4. Connection.new Connection returned 
+2023-09-19 10:48:54,849 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 4. Connection.isReadOnly() returned false
+2023-09-19 10:48:54,849 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 4. Connection.getAutoCommit() returned true
+2023-09-19 10:48:54,868 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 5. Connection opened. {executed in 19ms} 
+2023-09-19 10:48:54,868 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 5. Connection.new Connection returned 
+2023-09-19 10:48:54,868 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 5. Connection.isReadOnly() returned false
+2023-09-19 10:48:54,868 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 5. Connection.getAutoCommit() returned true
+2023-09-19 10:48:54,887 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 6. Connection opened. {executed in 19ms} 
+2023-09-19 10:48:54,887 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 6. Connection.new Connection returned 
+2023-09-19 10:48:54,887 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 6. Connection.isReadOnly() returned false
+2023-09-19 10:48:54,887 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 6. Connection.getAutoCommit() returned true
+2023-09-19 10:48:54,905 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 7. Connection opened. {executed in 18ms} 
+2023-09-19 10:48:54,905 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 7. Connection.new Connection returned 
+2023-09-19 10:48:54,905 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 7. Connection.isReadOnly() returned false
+2023-09-19 10:48:54,905 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 7. Connection.getAutoCommit() returned true
+2023-09-19 10:48:54,952 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 8. Connection opened. {executed in 46ms} 
+2023-09-19 10:48:54,952 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 8. Connection.new Connection returned 
+2023-09-19 10:48:54,952 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 8. Connection.isReadOnly() returned false
+2023-09-19 10:48:54,952 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 8. Connection.getAutoCommit() returned true
+2023-09-19 10:48:54,967 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 9. Connection opened. {executed in 15ms} 
+2023-09-19 10:48:54,967 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 9. Connection.new Connection returned 
+2023-09-19 10:48:54,967 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 9. Connection.isReadOnly() returned false
+2023-09-19 10:48:54,967 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 9. Connection.getAutoCommit() returned true
+2023-09-19 10:48:55,025 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 10. Connection opened. {executed in 58ms} 
+2023-09-19 10:48:55,025 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 10. Connection.new Connection returned 
+2023-09-19 10:48:55,025 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 10. Connection.isReadOnly() returned false
+2023-09-19 10:48:55,025 [HikariPool-1 connection adder] INFO  log4jdbc.log4j2 - 10. Connection.getAutoCommit() returned true
+2023-09-19 10:48:56,867 [main] INFO  log4jdbc.log4j2 - 1. Connection.rollback() returned 
+2023-09-19 10:48:56,870 [main] INFO  log4jdbc.log4j2 - 1. Connection.setAutoCommit(true) returned 
+2023-09-19 10:48:56,873 [main] INFO  log4jdbc.log4j2 - 1. Connection.clearWarnings() returned 
+2023-09-19 10:48:56,875 [main] ERROR com.nexmotion.SyncNpaApplication - ERROR_sync()
+java.lang.Exception: org.apache.http.conn.HttpHostConnectException: Connect to 192.168.0.44:8010 [/192.168.0.44] failed: Connection refused: connect
+	at com.nexmotion.requester.AbstractRequester.request(AbstractRequester.java:260)
+	at com.nexmotion.requester.AbstractRequester.send(AbstractRequester.java:217)
+	at com.nexmotion.requester.AbstractRequester.run(AbstractRequester.java:177)
+	at com.nexmotion.sync.SyncData.sync(SyncData.java:63)
+	at com.nexmotion.sync.SyncData$$FastClassBySpringCGLIB$$a8098074.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708)
+	at com.nexmotion.sync.SyncData$$EnhancerBySpringCGLIB$$3ea9db81.sync(<generated>)
+	at com.nexmotion.SyncNpaApplication.run(SyncNpaApplication.java:30)
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:768)
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1303)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1292)
+	at com.nexmotion.SyncNpaApplication.main(SyncNpaApplication.java:23)
+Caused by: org.apache.http.conn.HttpHostConnectException: Connect to 192.168.0.44:8010 [/192.168.0.44] failed: Connection refused: connect
+	at org.apache.http.impl.conn.HttpClientConnectionOperator.connect(HttpClientConnectionOperator.java:142)
+	at org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:319)
+	at org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:363)
+	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:219)
+	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:86)
+	at org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:108)
+	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:184)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:82)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:106)
+	at com.nexmotion.requester.AbstractRequester.request(AbstractRequester.java:254)
+	... 22 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:608)
+	at org.apache.http.conn.socket.PlainConnectionSocketFactory.connectSocket(PlainConnectionSocketFactory.java:72)
+	at org.apache.http.impl.conn.HttpClientConnectionOperator.connect(HttpClientConnectionOperator.java:125)
+	... 32 common frames omitted
+2023-09-19 10:48:56,875 [main] INFO  com.nexmotion.SyncNpaApplication - end sync
+2023-09-19 10:48:56,880 [SpringApplicationShutdownHook] INFO  o.s.i.endpoint.EventDrivenConsumer - Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2023-09-19 10:48:56,881 [SpringApplicationShutdownHook] INFO  o.s.i.c.PublishSubscribeChannel - Channel 'application.errorChannel' has 0 subscriber(s).
+2023-09-19 10:48:56,881 [SpringApplicationShutdownHook] INFO  o.s.i.endpoint.EventDrivenConsumer - stopped bean '_org.springframework.integration.errorLogger'
+2023-09-19 10:48:56,883 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2023-09-19 10:48:56,889 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 1. Connection closed. {executed in 3ms} 
+2023-09-19 10:48:56,889 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 1. Connection.close() returned 
+2023-09-19 10:48:56,890 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 2. Connection closed. {executed in 0ms} 
+2023-09-19 10:48:56,890 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 2. Connection.close() returned 
+2023-09-19 10:48:56,890 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 3. Connection closed. {executed in 0ms} 
+2023-09-19 10:48:56,890 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 3. Connection.close() returned 
+2023-09-19 10:48:56,891 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 4. Connection closed. {executed in 1ms} 
+2023-09-19 10:48:56,891 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 4. Connection.close() returned 
+2023-09-19 10:48:56,891 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 5. Connection closed. {executed in 0ms} 
+2023-09-19 10:48:56,891 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 5. Connection.close() returned 
+2023-09-19 10:48:56,891 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 6. Connection closed. {executed in 0ms} 
+2023-09-19 10:48:56,891 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 6. Connection.close() returned 
+2023-09-19 10:48:56,892 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 7. Connection closed. {executed in 1ms} 
+2023-09-19 10:48:56,892 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 7. Connection.close() returned 
+2023-09-19 10:48:56,892 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 8. Connection closed. {executed in 0ms} 
+2023-09-19 10:48:56,892 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 8. Connection.close() returned 
+2023-09-19 10:48:56,893 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 9. Connection closed. {executed in 1ms} 
+2023-09-19 10:48:56,893 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 9. Connection.close() returned 
+2023-09-19 10:48:56,893 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 10. Connection closed. {executed in 0ms} 
+2023-09-19 10:48:56,893 [HikariPool-1 connection closer] INFO  log4jdbc.log4j2 - 10. Connection.close() returned 
+2023-09-19 10:48:56,893 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

@@ -47,6 +47,7 @@ public class SyncData {
         LocalDateTime startDt = dateInfo.get(0).getChgStartDate();
 
         if (startDt == null) {
+            logger.debug("startDt가 널인 경우 모든 데이터 삭제 후 데이터를 새로 받는다");
         	// 처음 데이터를 가져오는 경우 모든 데이터를 삭제한다
             logger.info("truncate all tables");
             //실제로 지금 계정 테이블이랑 조직 테이블 샘플 데이터가 truncate 되면 안되니까 일단 주석처리 해놓음
