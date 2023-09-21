@@ -28,7 +28,7 @@ public class ParseOrganXML {
   	@Autowired
   	private OrganService organService;
 
-  	private final Logger logger = LoggerFactory.getLogger(ParseOrganXML.class);
+  	private final Logger logger = LoggerFactory.getLogger("checkDebug");
 
   	public void parseOrganData(String parameter) throws Exception{
 		logger.debug("parseOrganData() 시작");

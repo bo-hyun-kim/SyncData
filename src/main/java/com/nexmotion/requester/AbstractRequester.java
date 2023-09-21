@@ -46,7 +46,7 @@ import java.time.format.DateTimeFormatter;
 @Component
 public abstract class AbstractRequester {
 
-	private final Logger logger = LoggerFactory.getLogger("AbstractRequester.class");
+	private final Logger logger = LoggerFactory.getLogger("checkDebug");
 	
 	@Value("${server.addr}")
 	private String serverAddr;

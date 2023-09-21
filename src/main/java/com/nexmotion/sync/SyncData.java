@@ -24,7 +24,7 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class SyncData {
 
-    private final Logger logger = LoggerFactory.getLogger(SyncData.class);
+    private final Logger logger = LoggerFactory.getLogger("checkDebug");
 
     @Autowired
     private SyncService syncService;

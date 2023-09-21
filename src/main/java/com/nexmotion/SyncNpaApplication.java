@@ -19,7 +19,8 @@ import java.io.StringWriter;
 @EnableScheduling
 public class SyncNpaApplication implements CommandLineRunner {
 
-	private final Logger logger = LoggerFactory.getLogger("SyncNpaApplication.class");
+	private final Logger debugLogger = LoggerFactory.getLogger("checkDebug");
+	private final Logger errorLogger = LoggerFactory.getLogger("checkError");
 
 	@Autowired
 	private SyncData syncData;
@@ -30,7 +31,7 @@ public class SyncNpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		logger.debug("SyncNpa 시작");
+		debugLogger.debug("SyncNpa 시작");
 		try {
 			syncData.sync();
 		} catch (Exception e) {
@@ -40,10 +41,11 @@ public class SyncNpaApplication implements CommandLineRunner {
 			PrintWriter pw = new PrintWriter(sw);
 			e.printStackTrace(pw);
 			String stackTrace = sw.toString();
-			logger.debug("main.run()에러 " + e + stackTrace);
+			debugLogger.error(e + stackTrace);
+			errorLogger.error("main.run()에러 " + e + stackTrace);
 			//에러 로그 파일에 추가해야함
 		}
-		logger.debug("SyncNpa 종료");
+		debugLogger.debug("SyncNpa 종료");
 
 	}
 }

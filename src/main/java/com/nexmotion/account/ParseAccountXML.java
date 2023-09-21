@@ -27,7 +27,7 @@ public class ParseAccountXML {
     @Autowired
     private AccountService accountService;
 
-    private final Logger logger = LoggerFactory.getLogger("com.nexmotion.Account");
+    private final Logger logger = LoggerFactory.getLogger("checkDebug");
 
     //리턴값 : false - 추가 요청 정지
     //리턴값 : true - 추가 요청
