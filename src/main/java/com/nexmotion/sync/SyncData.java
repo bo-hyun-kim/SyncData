@@ -2,22 +2,19 @@ package com.nexmotion.sync;
 
 import com.nexmotion.account.Account;
 import com.nexmotion.account.AccountService;
-import com.nexmotion.organ.OrganService;
-import com.nexmotion.position.PositionService;
 import com.nexmotion.requester.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.cglib.core.Local;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.LocalDate;
@@ -28,6 +25,9 @@ public class SyncData {
 
     private final Logger debugLogger = LoggerFactory.getLogger("checkDebug");
     private final Logger errorLogger = LoggerFactory.getLogger("checkError");
+
+    @Value("${delete.property}")
+    private String deleteDate;
 
     @Autowired
     private SyncService syncService;
@@ -45,7 +45,7 @@ public class SyncData {
     private  PositionRequester positionRequester;
 
     @Transactional(rollbackFor = Exception.class)
-    @Scheduled(cron = "* * 20 * * *")
+    @Scheduled(cron = "${cron.property}")
     public void sync() {
         try {
             debugLogger.debug("sync() 시작");
@@ -84,20 +84,21 @@ public class SyncData {
             deleteRetireUser(now);
             debugLogger.debug("end sync()");
         } catch (Exception e) {
-            e.printStackTrace();
-            // StringWriter를 사용하여 스택 트레이스를 문자열로 변환
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
             String stackTrace = sw.toString();
             debugLogger.error(e + stackTrace);
-            errorLogger.error("main.run()에러 " + e + stackTrace);
+            errorLogger.error(e + stackTrace);
         }
     }
 
     public void deleteRetireUser(LocalDate now) {
         debugLogger.debug("deleteRetireUser() 시작");
-        if (now.getDayOfYear() == 256) { //9월13일로 설정. 1로 설정시 1월1일
+        LocalDate date = LocalDate.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM-dd");
+
+        if (date.format(format).equals(deleteDate)) {
             debugLogger.debug("삭제기간 설정일과 현재일이 같음");
             // 3년 전으로 이동하고 자정으로 설정
             LocalDate threeYearsAgo = now.minusYears(3).atStartOfDay().toLocalDate();
@@ -112,9 +113,12 @@ public class SyncData {
                 accountService.deleteRetireUseridAuth(account);
                 accountService.deleteRetireAccount(account);
             } catch (Exception e) {
-                e.printStackTrace();
+                StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw);
+                e.printStackTrace(pw);
+                String stackTrace = sw.toString();
+                errorLogger.error(e + stackTrace);
             }
-
         }
         debugLogger.debug("deleteRetireUser() 종료");
     }
