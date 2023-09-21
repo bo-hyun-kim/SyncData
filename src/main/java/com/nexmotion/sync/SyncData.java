@@ -86,14 +86,12 @@ public class SyncData {
             deleteRetireUser(now);
             debugLogger.debug("end sync()");
         } catch (Exception e) {
-            e.printStackTrace();
-            // StringWriter를 사용하여 스택 트레이스를 문자열로 변환
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
             String stackTrace = sw.toString();
             debugLogger.error(e + stackTrace);
-            errorLogger.error("main.run()에러 " + e + stackTrace);
+            errorLogger.error(e + stackTrace);
         }
     }
 
