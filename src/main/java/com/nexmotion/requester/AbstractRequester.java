@@ -106,12 +106,14 @@ public abstract class AbstractRequester {
 //	}
 	
 	public RequestDTO getRequestDTO() {
+		logger.debug("getRequestDTO() 시작");
 		RequestDTO dto = new RequestDTO();
 		dto.setQryPups(this.qryPups);
 		dto.setReqCl(this.reqCl);
 		dto.setPage(this.page);
 		dto.setChgStartDttm(this.chgStartDttm);
 		dto.setChgEndDttm(this.chgEndDttm);
+		logger.debug("getRequestDTO() 종료");
 		return dto;
 	}
 	
@@ -126,6 +128,8 @@ public abstract class AbstractRequester {
 	 * @return Map<String, String> 헤더 객체
 	 */
 	private Map<String, String> getHeader(String qryPups) {
+		
+		logger.debug("getHeader() 시작");
 		Map<String, String> reqHeader = new LinkedHashMap<String, String>();
 
 		reqHeader.put("TRNS_ID", getTodayTimeMilli() + "12345");
@@ -137,11 +141,12 @@ public abstract class AbstractRequester {
 		reqHeader.put("QRY_PUPS", new String(Base64.encodeBase64(qryPups.getBytes())));
 		reqHeader.put("RSPSE_CD", "");
 		System.out.println("reqHeader: "+ reqHeader);
-
+		logger.debug("getHeader() 종료");
 		return reqHeader;
 	}
 
 	private String getData(RequestDTO dto) {
+		logger.debug("getData() 시작");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		int reqCl = dto.getReqCl();
 		int qryCl = getQryCl();
@@ -155,19 +160,22 @@ public abstract class AbstractRequester {
 				+ "<CHG_END_DTTM>%s</CHG_END_DTTM><BLG_AGFC_GVOF_CD>%s</BLG_AGFC_GVOF_CD></DATA></REQUEST>";
 		String xml = String.format(fmt, reqCl, qryCl, page, chgStartDttm.format(formatter), chgEndDttm.format(formatter), blgAgfcGvofCd);
 		System.err.println("xml 확인===>" + xml);
+		logger.debug("getData() 종료");
 		return xml;
 	}
 	
 	private String getTodayTimeMilli() {
+		logger.debug("getTodayTimeMilli() 시작");
 		Format format = new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.US);
 		String todayStr = format.format(new Date());
+		logger.debug("getTodayTimeMilli() 종료");
 		return todayStr;
 	}
 
 	public boolean run(LocalDateTime startDt, LocalDateTime endDt) throws Exception {
 //		initVariable();
 //		System.err.println("시간 파라미터 확인===>"+ startDt + endDt);
-		logger.debug("추상 메서드 run() 실행 ");
+		logger.debug("run() 시작");
 		this.chgStartDttm = endDt;
 		this.chgEndDttm = startDt;
 		RequestDTO dto = getRequestDTO();
@@ -185,7 +193,7 @@ public abstract class AbstractRequester {
 
 			respCd = rootElement.getElementsByTagName("RESP_CD").item(0).getTextContent();
 			String loggerRespcd = String.format("%s", respCd);
-			logger.debug("응답 코드 ===> "+loggerRespcd);
+
 			// 실제 db 에 response 결과값을 파싱해서 저장
 			this.parse(response);
 			
@@ -200,9 +208,9 @@ public abstract class AbstractRequester {
 		
 		// db 에 현재시각 기록
 //		saveSystemDate();
-		
+		logger.debug("run() 종료");
 		return true;
-	}
+		}
 	
 	/**
 	 * 사용자 계정정보, 조직정보등의 페이지를 조회할 때 사용한다.
@@ -212,7 +220,7 @@ public abstract class AbstractRequester {
 	 * @throws Exception
 	 */
 	private String send(RequestDTO dto) throws Exception {
-		logger.debug("send 메서드 시작");
+		logger.debug("send() 시작");
 		String ret;
 
 		Map<String, String> reqHeader = getHeader(dto.getQryPups());
@@ -227,10 +235,13 @@ public abstract class AbstractRequester {
 
 		ret = new String(decytedResponse, StandardCharsets.UTF_8);
 		ret = ret.trim();
+		logger.debug("send() 종료");
 		return ret;
 	}
 
 	public byte[] request(byte[] bodyEntity, Map<String, String> reqHeader) throws Exception {
+		
+		logger.debug("request() 시작");
 		byte[] result;
 
 		// Timeout 설정
@@ -263,17 +274,18 @@ public abstract class AbstractRequester {
 			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK)
 				throw new Exception("Http Error:" + response.getStatusLine().getStatusCode());
 		} catch (IOException e) {
-			logger.info("request 에러");
+			logger.debug("request 에러");
 			throw new Exception(e);
 		} finally {
 		    try {
 		        httpClient.close();
 		    } catch (IOException e) {
-				logger.info("request 이후 close 에러");
+				logger.debug("request 이후 close 에러");
 		        // close() 메서드 호출 중 발생하는 예외 처리
 		    }
 		}
 	
+		logger.debug("request() 종료");
 		return result;
 	}
 

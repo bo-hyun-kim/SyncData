@@ -42,6 +42,7 @@ public class SyncData {
     @Transactional(rollbackFor = Exception.class)
     public void sync() throws Exception {
 
+        logger.debug("sync() 시작");
         SyncVO sync = new SyncVO();
         List<SyncVO> dateInfo = syncService.getChgDate();
         LocalDateTime startDt = dateInfo.get(0).getChgStartDate();
@@ -49,7 +50,6 @@ public class SyncData {
         if (startDt == null) {
             logger.debug("startDt가 널인 경우 모든 데이터 삭제 후 데이터를 새로 받는다");
         	// 처음 데이터를 가져오는 경우 모든 데이터를 삭제한다
-            logger.info("truncate all tables");
             //실제로 지금 계정 테이블이랑 조직 테이블 샘플 데이터가 truncate 되면 안되니까 일단 주석처리 해놓음
 //            accountService.truncateAccount();
 //            organService.truncateOragan();
@@ -79,11 +79,13 @@ public class SyncData {
         LocalDate now = LocalDate.now();
 
         deleteRetireUser(now);
+        logger.debug("end sync()");
     }
 
     public void deleteRetireUser(LocalDate now) {
+        logger.debug("deleteRetireUser() 시작");
         if (now.getDayOfYear() == 256) { //9월13일로 설정. 1로 설정시 1월1일
-
+            logger.debug("삭제기간 설정일과 현재일이 같음");
             // 3년 전으로 이동하고 자정으로 설정
             LocalDate threeYearsAgo = now.minusYears(3).atStartOfDay().toLocalDate();
 
@@ -93,6 +95,7 @@ public class SyncData {
             Account account = new Account();
             account.setRetireDate(dateToString);
             try {
+                logger.debug("삭제기간 설정일과 현재일이 같은 내용을 삭제.");
                 accountService.deleteRetireAccount(account);
                 accountService.deleteRetireUseridAuth(account);
             } catch (Exception e) {
@@ -101,5 +104,6 @@ public class SyncData {
             }
             System.err.println("success");
         }
+        logger.debug("deleteRetireUser() 종료");
     }
 }

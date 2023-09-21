@@ -27,7 +27,7 @@ public class ParseAccountXML {
     @Autowired
     private AccountService accountService;
 
-    private final Logger logger = LoggerFactory.getLogger("com.nexmotion.Account");
+    private Logger logger = LoggerFactory.getLogger("com.nexmotion.Account");
 
     //리턴값 : false - 추가 요청 정지
     //리턴값 : true - 추가 요청
@@ -125,37 +125,49 @@ public class ParseAccountXML {
     }
 
     private String getElementText(Element parentElement, String tagName) {
+        logger.debug("getElementText() 시작");
         NodeList nodeList = parentElement.getElementsByTagName(tagName);
         if (nodeList.getLength() > 0) {
             Node node = nodeList.item(0);
             return node.getTextContent();
         }
+        logger.debug("getElementText() 종료");
         return null;
     }
 
     private List<Node> asList(NodeList nodeList) {
+        logger.debug("asList() 시작");
         List<Node> nodeListAsList = new ArrayList<>();
         for (int i = 0; i < nodeList.getLength(); i++) {
             nodeListAsList.add(nodeList.item(i));
         }
+        logger.debug("asList() 종료");
         return nodeListAsList;
     }
 
     private void compareData(List<Account> newData, List<Account> existingData) throws Exception {
-        for (Account newAccount : newData) {
-            boolean found = false;
-            for (Account existingAccount : existingData) {
-                if (newAccount.getUserid().equals(existingAccount.getUserid())) {
-                    System.err.println("겹치는 데이터" + newAccount);
-                    accountService.updateAccount(newAccount);
-                    found = true;
-                    break;
+        logger.debug("compareData() 시작");
+        try {
+            for (Account newAccount : newData) {
+                boolean found = false;
+                for (Account existingAccount : existingData) {
+                    if (newAccount.getUserid().equals(existingAccount.getUserid())) {
+                        System.err.println("겹치는 데이터" + newAccount);
+                        accountService.updateAccount(newAccount);
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    accountService.insertAccount(newAccount);
+                    accountService.insertUseridAuth(newAccount);
                 }
             }
-            if (!found) {
-                accountService.insertAccount(newAccount);
-                accountService.insertUseridAuth(newAccount);
-            }
+            throw new Exception();
+        } catch(Exception e) {
+            logger.info("ERROR_parseAccountData()");
+            logger.error("ERROR_parseAccountData()");
         }
+        logger.debug("compareData() 시작");
     }
 }

@@ -25,13 +25,13 @@ public class SyncNpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		logger.debug("start sync");
+		logger.debug("SyncNpa 시작");
 		try {
 			syncData.sync();
 		} catch (Exception e) {
 			logger.error("ERROR_sync()", e);
 		}
-		logger.debug("end sync");
+		logger.debug("SyncNpa 종료");
 
 	}
 }

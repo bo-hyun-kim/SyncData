@@ -28,10 +28,10 @@ public class ParseOrganXML {
   	@Autowired
   	private OrganService organService;
 
-  	private final Logger logger = LoggerFactory.getLogger(ParseOrganXML.class);
+  	private Logger logger = LoggerFactory.getLogger(ParseOrganXML.class);
 
   	public void parseOrganData(String parameter) throws Exception{
-
+		logger.debug("parseOrganData() 시작");
 		try {
 			ErrorCode errorcode = new ErrorCode();
 
@@ -53,11 +53,13 @@ public class ParseOrganXML {
 			// 그 외 : 에러인 경우
 
 			if (respCd.equals("01")) {
+				logger.debug("respCd가 1일 때");
 				return;
 			}
 
 			// 에러 향후 재처리
 			if (!respCd.equals("02") && !respCd.equals("00")) {
+				logger.debug("respCd가 0과 2가 아닐 때");
 				String errorMessage = String.format("%s:%s", respCd, errorcode.get(respCd));
 				throw new Exception(errorMessage);
 			}
@@ -65,6 +67,7 @@ public class ParseOrganXML {
 			List<Organ> newData = parseData(doc);
 
 			if (existingData.size() == 0) {
+				logger.debug("DB에 계정 정보가 없을 때");
 				organService.insertOrganList(newData);
 			} else {
 				compareData(newData, existingData);
@@ -73,9 +76,11 @@ public class ParseOrganXML {
 			e.printStackTrace();
 			throw new Exception(e);
 		}
+		logger.debug("parseOrganData() 종료");
 	}
 
 	public List<Organ> parseData(Document doc) throws Exception {
+		logger.debug("parseData() 시작");
 		List<Organ> organList = new ArrayList<>();
 
 		try {
@@ -110,6 +115,7 @@ public class ParseOrganXML {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		logger.debug("parseData() 종료");
 		return organList;
 	}
 
@@ -131,6 +137,7 @@ public class ParseOrganXML {
 	}
 
 	private void compareData(List<Organ> newData, List<Organ> existingData) throws Exception {
+		logger.debug("compareData() 시작");
 		for (Organ newOrgan : newData) {
 			boolean found = false;
 			for (Organ existingOrgan : existingData) {
@@ -144,6 +151,7 @@ public class ParseOrganXML {
 				organService.insertOrgan(newOrgan);
 			}
 		}
+		logger.debug("compareData() 종료");
 	}
 
 }

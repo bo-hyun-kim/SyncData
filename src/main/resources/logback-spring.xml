@@ -46,7 +46,9 @@
         </rollingPolicy>
     </appender>
 
-    <appender name="LOG_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+ 
+
+        <appender name="LOG_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${FILE_PATH}/info/info.log</file>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <!-- 로그를 호출한 클래스와 메소드도 함께 출력 -->
@@ -69,15 +71,66 @@
         </rollingPolicy>
     </appender>
 
+            <appender name="LOG_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${FILE_PATH}/error/error.log</file>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <!-- 로그를 호출한 클래스와 메소드도 함께 출력 -->
+            <includeCallerData>true</includeCallerData>
+            <!-- 호스트명을 기록하기 위해 아래의 옵션을 사용 -->
+<!--            <includeContext>false</includeContext>-->
+            <!-- 로그에서 "호스트"란 보통 로그를 생성하는 시스템, 서버, 또는 컴퓨터를 뜻함-->
+<!--            <customFields>{"hostname":"${HOSTNAME}"}</customFields>-->
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${FILE_PATH}/error/error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- 시간 및 파일 크기 기반 롤링 정책 설정 -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 50MB -->
+                <maxFileSize>50MB</maxFileSize>
+                <!-- kb, mb, gb -->
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- 보관할 로그 파일의 최대 기록 횟수를 설정 -->
+            <maxHistory>100</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="com.nexmotion.Account" level="DEBUG" additivity="false">
+        <!-- AbstractRequester.class 로그는 LOG_INFO appender 만 사용하고, root 로거는 상속 받지 않음(additivity=false) -->
+        <!-- private Logger logger = LoggerFactory.getLogger("AbstractRequester.class"); -->
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="LOG_ERROR" />
+    </logger>
+
     <logger name="AbstractRequester.class" level="DEBUG" additivity="false">
+        <!-- AbstractRequester.class 로그는 LOG_INFO appender 만 사용하고, root 로거는 상속 받지 않음(additivity=false) -->
+        <!-- private Logger logger = LoggerFactory.getLogger("AbstractRequester.class"); -->
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="LOG_ERROR" />
+    </logger>
+
+    <logger name="SyncData.class" level="DEBUG" additivity="false">
+        <!-- AbstractRequester.class 로그는 LOG_INFO appender 만 사용하고, root 로거는 상속 받지 않음(additivity=false) -->
+        <!-- private Logger logger = LoggerFactory.getLogger("AbstractRequester.class"); -->
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="LOG_ERROR" />
+    </logger>
+
+    <logger name="ParseOrganXML.class" level="DEBUG" additivity="false">
+        <!-- AbstractRequester.class 로그는 LOG_INFO appender 만 사용하고, root 로거는 상속 받지 않음(additivity=false) -->
+        <!-- private Logger logger = LoggerFactory.getLogger("AbstractRequester.class"); -->
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="LOG_ERROR" />
+    </logger>
+
+    <logger name="com.nexmotion.Account" level="INFO" additivity="false">
         <!-- AbstractRequester.class 로그는 LOG_INFO appender 만 사용하고, root 로거는 상속 받지 않음(additivity=false) -->
         <!-- private Logger logger = LoggerFactory.getLogger("AbstractRequester.class"); -->
         <appender-ref ref="STDOUT" />
         <appender-ref ref="LOG_INFO" />
     </logger>
 
+
     <root level="${ROOT_LEVEL}">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="APP" />
     </root>
 </configuration>
