@@ -138,6 +138,7 @@ public class ParseAccountXML {
                     System.err.println("겹치는 데이터" + newAccount);
                     accountService.updateAccount(newAccount);
                     if (!(newAccount.getGvofcode().equals(existingAccount.getGvofcode()))) {
+                        accountService.updateAuth(newAccount);
                     }
                     found = true;
                     break;
