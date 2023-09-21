@@ -83,14 +83,6 @@
         </rollingPolicy>
     </appender>
 
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>${FILE_PATH}/file/file.log</file> <!-- Specify the log file path -->
-        <append>true</append>
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
-
     <logger name="checkDebug" level="DEBUG" additivity="false">
         <!-- AbstractRequester.class 로그는 LOG_INFO appender 만 사용하고, root 로거는 상속 받지 않음(additivity=false) -->
         <!-- private Logger logger = LoggerFactory.getLogger("AbstractRequester.class"); -->
@@ -105,7 +97,7 @@
         <appender-ref ref="APP" />
     </logger>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="APP" />
     </root>

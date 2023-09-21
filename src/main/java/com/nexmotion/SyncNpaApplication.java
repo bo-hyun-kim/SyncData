@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.nexmotion.requester.OrganizationRequester;
 import com.nexmotion.requester.UserRequester;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -20,7 +21,6 @@ import java.io.StringWriter;
 public class SyncNpaApplication implements CommandLineRunner {
 
 	private final Logger debugLogger = LoggerFactory.getLogger("checkDebug");
-	private final Logger errorLogger = LoggerFactory.getLogger("checkError");
 
 	@Autowired
 	private SyncData syncData;
@@ -28,24 +28,10 @@ public class SyncNpaApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(SyncNpaApplication.class, args);
 	}
-
 	@Override
 	public void run(String... args) {
 		debugLogger.debug("SyncNpa 시작");
-		try {
-			syncData.sync();
-		} catch (Exception e) {
-			e.printStackTrace();
-			// StringWriter를 사용하여 스택 트레이스를 문자열로 변환
-			StringWriter sw = new StringWriter();
-			PrintWriter pw = new PrintWriter(sw);
-			e.printStackTrace(pw);
-			String stackTrace = sw.toString();
-			debugLogger.error(e + stackTrace);
-			errorLogger.error("main.run()에러 " + e + stackTrace);
-			//에러 로그 파일에 추가해야함
-		}
+		syncData.sync();
 		debugLogger.debug("SyncNpa 종료");
-
 	}
 }
