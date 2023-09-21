@@ -8,7 +8,6 @@ import com.nexmotion.requester.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,8 +45,7 @@ public class SyncData {
     private  PositionRequester positionRequester;
 
     @Transactional(rollbackFor = Exception.class)
-
-    @Scheduled(cron = "${cron.property}")
+    @Scheduled(cron = "* * 20 * * *")
     public void sync() {
         try {
             debugLogger.debug("sync() 시작");
@@ -86,12 +84,14 @@ public class SyncData {
             deleteRetireUser(now);
             debugLogger.debug("end sync()");
         } catch (Exception e) {
+            e.printStackTrace();
+            // StringWriter를 사용하여 스택 트레이스를 문자열로 변환
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
             String stackTrace = sw.toString();
             debugLogger.error(e + stackTrace);
-            errorLogger.error(e + stackTrace);
+            errorLogger.error("main.run()에러 " + e + stackTrace);
         }
     }
 
