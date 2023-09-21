@@ -8,6 +8,7 @@ import com.nexmotion.requester.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +47,7 @@ public class SyncData {
 
     @Transactional(rollbackFor = Exception.class)
 
-    @Scheduled(cron = "* * 19 * * *")
+    @Scheduled(cron = "${cron.property}")
     public void sync() {
         try {
             debugLogger.debug("sync() 시작");
