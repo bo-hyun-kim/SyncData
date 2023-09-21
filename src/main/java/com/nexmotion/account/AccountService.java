@@ -62,4 +62,8 @@ public class AccountService implements AccountMapper {
 		accountMapper.deleteRetireUseridAuth(account);
 	}
 
+	@Override
+	public void updateAuth(Account account) throws Exception {
+		accountMapper.updateAuth(account);
+	}
 }

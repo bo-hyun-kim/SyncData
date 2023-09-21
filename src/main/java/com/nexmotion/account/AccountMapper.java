@@ -28,4 +28,5 @@ public interface AccountMapper {
 
   public void truncateUseridAuth() throws SQLException;
 
+  public void updateAuth(Account account) throws Exception;
 }

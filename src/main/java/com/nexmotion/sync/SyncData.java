@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.cglib.core.Local;
+import org.springframework.scheduling.annotation.Scheduled;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -40,6 +42,7 @@ public class SyncData {
     private  PositionRequester positionRequester;
 
     @Transactional(rollbackFor = Exception.class)
+    //@Scheduled(cron = "0 0 2 * * *") //매일 2시 시작 일단 주석처리
     public void sync() throws Exception {
 
         logger.debug("sync() 시작");
@@ -96,8 +99,8 @@ public class SyncData {
             account.setRetireDate(dateToString);
             try {
                 logger.debug("삭제기간 설정일과 현재일이 같은 내용을 삭제.");
-                accountService.deleteRetireAccount(account);
                 accountService.deleteRetireUseridAuth(account);
+                accountService.deleteRetireAccount(account);
             } catch (Exception e) {
                 e.printStackTrace();
             //에러 로그 파일에 추가해야함

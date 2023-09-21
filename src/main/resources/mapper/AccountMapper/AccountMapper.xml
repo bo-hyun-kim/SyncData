@@ -6,6 +6,7 @@
 
     <resultMap type="com.nexmotion.account.Account" id="account">
        <id column="userid" property="userid" />
+       <id column="gvofcode" property="gvofcode" />
     </resultMap>
 
     <insert id="insertAccountList" parameterType="java.util.List">
@@ -103,6 +104,7 @@
     <select id="selectAccount" parameterType="com.nexmotion.account.Account" resultMap="account">
         /* AccountMapper.selectAccount */
       SELECT userid
+            ,gvofcode
         FROM account
     </select>
 
@@ -149,5 +151,17 @@
         TRUNCATE
             TABLE useridauth
     </delete>
+
+    <update id="updateAuth" parameterType="com.nexmotion.account.Account">
+      /* AccountMapper.updateAuth */
+      UPDATE useridauth
+         SET isadmin = 0
+            ,isimginform = 0
+            ,isprivacy = 0
+            ,isvideoinform = 0
+            ,isexcept = 0
+            ,isdestruction = 0
+       WHERE userid = #{userid}
+    </update>
 
 </mapper>
