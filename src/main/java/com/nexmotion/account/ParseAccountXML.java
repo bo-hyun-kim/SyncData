@@ -27,14 +27,13 @@ public class ParseAccountXML {
     @Autowired
     private AccountService accountService;
 
-    private Logger logger = LoggerFactory.getLogger("com.nexmotion.Account");
+    private final Logger logger = LoggerFactory.getLogger("com.nexmotion.Account");
 
     //리턴값 : false - 추가 요청 정지
     //리턴값 : true - 추가 요청
 
     public void parseAccountData(String parameter) throws Exception {
 
-        try {
             ErrorCode errorcode = new ErrorCode();
 
             String rData = parameter;
@@ -71,56 +70,41 @@ public class ParseAccountXML {
             } else {
                 compareData(newData, existingData);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error("ERROR_parseAccountData()");
-            throw new Exception(e);
-        }
     }
 
     public List<Account> parseData(Document doc) throws Exception {
 
         List<Account> accountList = new ArrayList<>();
 
-        try {
-            Element responseElement = doc.getDocumentElement();
-
-            Element headerElement = (Element) responseElement.getElementsByTagName("HEADER").item(0);
-            String tlgrCd = getElementText(headerElement, "TLGR_CD");
-            String respCd = getElementText(headerElement, "RESP_CD");
-
-            Element dataElement = (Element) responseElement.getElementsByTagName("DATA").item(0);
-            NodeList recordList = dataElement.getElementsByTagName("RECORD");
-
-            for (Node recordNode : asList(recordList)) {
-                Account account = new Account();
-                Element recordElement = (Element) recordNode;
-                String userNo = getElementText(recordElement, "USER_NO");
-                String userId = getElementText(recordElement, "USER_ID");
-                String userNm = getElementText(recordElement, "USER_NM");
-                String userGvofCd = getElementText(recordElement, "USER_GVOF_CD");
-                String userOposCd = getElementText(recordElement, "USER_OPOS_CD");
-                String userCposCd = getElementText(recordElement, "USER_CPOS_CD");
-                String userStatCd = getElementText(recordElement, "USER_STAT_CD");
-                String chgdate = getElementText(recordElement, "CHG_DTTM");
-
-                account.setUserno(userNo);
-                account.setUserid(userId);
-                account.setUsername(userNm);
-                account.setGvofcode(userGvofCd);
-                account.setOposcode(userOposCd);
-                account.setCposcode(userCposCd);
-                account.setUserstat(userStatCd);
-                account.setChgdate(chgdate);
-
-                accountList.add(account);
-                System.err.println("account===>"+account);
-
-            }
-            System.err.println("accountList===>"+accountList);
-        } catch (Exception e) {
-            e.printStackTrace();
+        Element responseElement = doc.getDocumentElement();
+        Element headerElement = (Element) responseElement.getElementsByTagName("HEADER").item(0);
+        String tlgrCd = getElementText(headerElement, "TLGR_CD");
+        String respCd = getElementText(headerElement, "RESP_CD");
+        Element dataElement = (Element) responseElement.getElementsByTagName("DATA").item(0);
+        NodeList recordList = dataElement.getElementsByTagName("RECORD");
+        for (Node recordNode : asList(recordList)) {
+            Account account = new Account();
+            Element recordElement = (Element) recordNode;
+            String userNo = getElementText(recordElement, "USER_NO");
+            String userId = getElementText(recordElement, "USER_ID");
+            String userNm = getElementText(recordElement, "USER_NM");
+            String userGvofCd = getElementText(recordElement, "USER_GVOF_CD");
+            String userOposCd = getElementText(recordElement, "USER_OPOS_CD");
+            String userCposCd = getElementText(recordElement, "USER_CPOS_CD");
+            String userStatCd = getElementText(recordElement, "USER_STAT_CD");
+            String chgdate = getElementText(recordElement, "CHG_DTTM");
+            account.setUserno(userNo);
+            account.setUserid(userId);
+            account.setUsername(userNm);
+            account.setGvofcode(userGvofCd);
+            account.setOposcode(userOposCd);
+            account.setCposcode(userCposCd);
+            account.setUserstat(userStatCd);
+            account.setChgdate(chgdate);
+            accountList.add(account);
+            System.err.println("account===>"+account);
         }
+        System.err.println("accountList===>"+accountList);
         return accountList;
     }
 
@@ -147,26 +131,22 @@ public class ParseAccountXML {
 
     private void compareData(List<Account> newData, List<Account> existingData) throws Exception {
         logger.debug("compareData() 시작");
-        try {
-            for (Account newAccount : newData) {
-                boolean found = false;
-                for (Account existingAccount : existingData) {
-                    if (newAccount.getUserid().equals(existingAccount.getUserid())) {
-                        System.err.println("겹치는 데이터" + newAccount);
-                        accountService.updateAccount(newAccount);
-                        found = true;
-                        break;
+        for (Account newAccount : newData) {
+            boolean found = false;
+            for (Account existingAccount : existingData) {
+                if (newAccount.getUserid().equals(existingAccount.getUserid())) {
+                    System.err.println("겹치는 데이터" + newAccount);
+                    accountService.updateAccount(newAccount);
+                    if (!(newAccount.getGvofcode().equals(existingAccount.getGvofcode()))) {
                     }
-                }
-                if (!found) {
-                    accountService.insertAccount(newAccount);
-                    accountService.insertUseridAuth(newAccount);
+                    found = true;
+                    break;
                 }
             }
-            throw new Exception();
-        } catch(Exception e) {
-            logger.info("ERROR_parseAccountData()");
-            logger.error("ERROR_parseAccountData()");
+            if (!found) {
+                accountService.insertAccount(newAccount);
+                accountService.insertUseridAuth(newAccount);
+            }
         }
         logger.debug("compareData() 시작");
     }

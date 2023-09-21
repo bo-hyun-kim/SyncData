@@ -100,9 +100,9 @@ public class SyncData {
                 accountService.deleteRetireUseridAuth(account);
             } catch (Exception e) {
                 e.printStackTrace();
-                System.err.println("failed");
+            //에러 로그 파일에 추가해야함
             }
-            System.err.println("success");
+
         }
         logger.debug("deleteRetireUser() 종료");
     }

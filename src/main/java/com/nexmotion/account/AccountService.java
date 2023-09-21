@@ -13,32 +13,32 @@ public class AccountService implements AccountMapper {
 	private AccountMapper accountMapper;
 
 	@Override
-	public List<Account> selectAccount() throws Exception {
+	public List<Account> selectAccount() throws SQLException {
 		return accountMapper.selectAccount();
 	}
 	
 	@Override
-	public void insertAccountList(List<Account> list) throws Exception {
+	public void insertAccountList(List<Account> list) throws SQLException {
 		accountMapper.insertAccountList(list);
 	}
 
 	@Override
-	public void insertUseridAuthList(List<Account> list) throws Exception {
+	public void insertUseridAuthList(List<Account> list) throws SQLException {
 		accountMapper.insertUseridAuthList(list);
 	}
 
 	@Override
-	public void insertAccount(Account account) throws Exception {
+	public void insertAccount(Account account) throws SQLException {
 		accountMapper.insertAccount(account);
 	}
 
 	@Override
-	public void insertUseridAuth(Account account) throws Exception {
+	public void insertUseridAuth(Account account) throws SQLException {
 		accountMapper.insertUseridAuth(account);
 	}
 
 	@Override
-	public void updateAccount(Account account) throws Exception {
+	public void updateAccount(Account account) throws SQLException {
 		accountMapper.updateAccount(account);
 	}
 

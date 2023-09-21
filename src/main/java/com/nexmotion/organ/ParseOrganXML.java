@@ -28,11 +28,10 @@ public class ParseOrganXML {
   	@Autowired
   	private OrganService organService;
 
-  	private Logger logger = LoggerFactory.getLogger(ParseOrganXML.class);
+  	private final Logger logger = LoggerFactory.getLogger(ParseOrganXML.class);
 
   	public void parseOrganData(String parameter) throws Exception{
 		logger.debug("parseOrganData() 시작");
-		try {
 			ErrorCode errorcode = new ErrorCode();
 
 			String rData = parameter;
@@ -72,10 +71,6 @@ public class ParseOrganXML {
 			} else {
 				compareData(newData, existingData);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception(e);
-		}
 		logger.debug("parseOrganData() 종료");
 	}
 
@@ -83,7 +78,6 @@ public class ParseOrganXML {
 		logger.debug("parseData() 시작");
 		List<Organ> organList = new ArrayList<>();
 
-		try {
 			Element responseElement = doc.getDocumentElement();
 
 			Element headerElement = (Element) responseElement.getElementsByTagName("HEADER").item(0);
@@ -112,9 +106,6 @@ public class ParseOrganXML {
 				System.err.println("organ===>"+organ);
 
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		logger.debug("parseData() 종료");
 		return organList;
 	}

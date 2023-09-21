@@ -10,13 +10,13 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface PositionMapper {
 
-  public List<Position> selectPosition() throws Exception;
+  public List<Position> selectPosition() throws SQLException;
   
-  public void insertPositionList(List<Position> list) throws Exception;
+  public void insertPositionList(List<Position> list) throws SQLException;
 
-  public void insertPosition(Position position) throws Exception;
+  public void insertPosition(Position position) throws SQLException;
 
-  public void updatePosition(Position position) throws Exception;
+  public void updatePosition(Position position) throws SQLException;
 
   public void truncatePosition() throws SQLException;
 

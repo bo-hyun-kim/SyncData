@@ -11,10 +11,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.nexmotion.requester.OrganizationRequester;
 import com.nexmotion.requester.UserRequester;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 @SpringBootApplication
 public class SyncNpaApplication implements CommandLineRunner {
 
-	private final Logger logger = LoggerFactory.getLogger(SyncNpaApplication.class);
+	private final Logger logger = LoggerFactory.getLogger("SyncNpaApplication.class");
 
 	@Autowired
 	private SyncData syncData;
@@ -29,7 +32,14 @@ public class SyncNpaApplication implements CommandLineRunner {
 		try {
 			syncData.sync();
 		} catch (Exception e) {
-			logger.error("ERROR_sync()", e);
+			e.printStackTrace();
+			// StringWriter를 사용하여 스택 트레이스를 문자열로 변환
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			e.printStackTrace(pw);
+			String stackTrace = sw.toString();
+			logger.debug("main.run()에러 " + e + stackTrace);
+			//에러 로그 파일에 추가해야함
 		}
 		logger.debug("SyncNpa 종료");
 

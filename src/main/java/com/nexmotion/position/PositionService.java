@@ -15,22 +15,22 @@ public class PositionService implements PositionMapper {
   private PositionMapper positionMapper;
 
   @Override
-  public List<Position> selectPosition() throws Exception {
+  public List<Position> selectPosition() throws SQLException {
     return positionMapper.selectPosition();
   }
 
   @Override
-  public void insertPositionList(List<Position> list) throws Exception {
+  public void insertPositionList(List<Position> list) throws SQLException {
     positionMapper.insertPositionList(list);
   }
 
   @Override
-  public void updatePosition(Position position) throws Exception {
+  public void updatePosition(Position position) throws SQLException {
     positionMapper.updatePosition(position);
   }
 
   @Override
-  public void insertPosition(Position position) throws Exception {
+  public void insertPosition(Position position) throws SQLException {
     positionMapper.insertPosition(position);
   }
 

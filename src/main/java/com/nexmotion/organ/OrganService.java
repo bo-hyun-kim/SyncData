@@ -15,22 +15,22 @@ public class OrganService implements OrganMapper {
   private OrganMapper organMapper;
 
   @Override
-  public List<Organ> selectOrgan() throws Exception {
+  public List<Organ> selectOrgan() throws SQLException {
     return organMapper.selectOrgan();
   }
 
   @Override
-  public void insertOrganList(List<Organ> list) throws Exception {
+  public void insertOrganList(List<Organ> list) throws SQLException {
     organMapper.insertOrganList(list);
   }
 
   @Override
-  public void updateOrgan(Organ organ) throws Exception {
+  public void updateOrgan(Organ organ) throws SQLException {
     organMapper.updateOrgan(organ);
   }
 
   @Override
-  public void insertOrgan(Organ organ) throws Exception {
+  public void insertOrgan(Organ organ) throws SQLException {
     organMapper.insertOrgan(organ);
   }
 

@@ -258,32 +258,21 @@ public abstract class AbstractRequester {
 				.build();
 
 //		CloseableHttpClient httpClient = HttpClients.createDefault();
-		try {
             // URI 생성
-            URI uri = new URI(serverAddr);
-			HttpPost postMethod = new HttpPost(uri);
-			postMethod.setHeader("Content-Type", "application/xml; charset=UTF-8");
-			HttpEntity entity = new ByteArrayEntity(bodyEntity);
-			postMethod.setEntity(entity);
-			for (String key : reqHeader.keySet()) {
-				postMethod.addHeader(key, reqHeader.get(key));
-			}
-			HttpResponse response = httpClient.execute(postMethod);
-
-			result = FileCopyUtils.copyToByteArray(response.getEntity().getContent());
-			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK)
-				throw new Exception("Http Error:" + response.getStatusLine().getStatusCode());
-		} catch (IOException e) {
-			logger.debug("request 에러");
-			throw new Exception(e);
-		} finally {
-		    try {
-		        httpClient.close();
-		    } catch (IOException e) {
-				logger.debug("request 이후 close 에러");
-		        // close() 메서드 호출 중 발생하는 예외 처리
-		    }
+		URI uri = new URI(serverAddr);
+		HttpPost postMethod = new HttpPost(uri);
+		postMethod.setHeader("Content-Type", "application/xml; charset=UTF-8");
+		HttpEntity entity = new ByteArrayEntity(bodyEntity);
+		postMethod.setEntity(entity);
+		for (String key : reqHeader.keySet()) {
+			postMethod.addHeader(key, reqHeader.get(key));
 		}
+		HttpResponse response = httpClient.execute(postMethod);
+		result = FileCopyUtils.copyToByteArray(response.getEntity().getContent());
+		if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK)
+			throw new Exception("Http Error:" + response.getStatusLine().getStatusCode());
+		httpClient.close();
+
 	
 		logger.debug("request() 종료");
 		return result;

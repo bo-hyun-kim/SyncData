@@ -8,17 +8,17 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface AccountMapper {
 
-  public List<Account> selectAccount() throws Exception;
+  public List<Account> selectAccount() throws SQLException;
   
-  public void insertAccountList(List<Account> list) throws Exception;
+  public void insertAccountList(List<Account> list) throws SQLException;
 
-  public void insertUseridAuthList(List<Account> list) throws Exception;
+  public void insertUseridAuthList(List<Account> list) throws SQLException;
 
-  public void insertAccount(Account account) throws Exception;
+  public void insertAccount(Account account) throws SQLException;
 
-  public void insertUseridAuth(Account account) throws Exception;
+  public void insertUseridAuth(Account account) throws SQLException;
 
-  public void updateAccount(Account account) throws Exception;
+  public void updateAccount(Account account) throws SQLException;
 
   public void deleteRetireAccount(Account account) throws SQLException;
 
