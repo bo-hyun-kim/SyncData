@@ -35,7 +35,6 @@ public class ParseOrganXML {
 			ErrorCode errorcode = new ErrorCode();
 
 			String rData = parameter;
-			System.err.println("organData===>" + rData);
 
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
@@ -103,7 +102,6 @@ public class ParseOrganXML {
 				organ.setChgdate(chgdate);
 
 				organList.add(organ);
-				System.err.println("organ===>"+organ);
 
 			}
 		logger.debug("parseData() 종료");

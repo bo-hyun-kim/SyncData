@@ -17,7 +17,7 @@
     <insert id="insertOrganList" parameterType="java.util.List">
        /* OrganMapper.insertOrganList */
        INSERT
-         INTO VI_GVOF_MS
+         INTO organ
               (gvofcode
               ,gvofname
               ,hgvofcode
@@ -35,7 +35,7 @@
     <insert id="insertOrgan" parameterType="com.nexmotion.organ.Organ">
         /* OrganMapper.insertOrgan */
           INSERT
-            INTO VI_GVOF_MS
+            INTO organ
                  (gvofcode
                  ,gvofname
                  ,hgvofcode
@@ -51,11 +51,11 @@
     <select id="selectOrgan" resultMap="organ">
       /* OrganMapper.selectOrgan */
       SELECT gvofcode
-        FROM VI_GVOF_MS
+        FROM organ
     </select>
     <update id="updateOrgan" parameterType="com.nexmotion.organ.Organ">
         /* OrganMapper.updateOrgan */
-        UPDATE VI_GVOF_MS
+        UPDATE organ
            SET gvofcode = #{gvofcode}
               ,gvofname = #{gvofname}
               ,hgvofcode = #{hgvofcode}
@@ -67,6 +67,6 @@
     <delete id="truncateOrgan">
         /*OrganMapper.truncateOrgan Query*/
         TRUNCATE
-            TABLE VI_GVOF_MS
+            TABLE organ
     </delete>
 </mapper>

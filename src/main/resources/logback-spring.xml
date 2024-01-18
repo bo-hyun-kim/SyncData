@@ -83,11 +83,30 @@
         </rollingPolicy>
     </appender>
 
+    <appender name="LOG_PACKET" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${FILE_PATH}/packet/packet.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss:%-3relative} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${FILE_PATH}/packet/packet.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <!-- 시간 및 파일 크기 기반 롤링 정책 설정 -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 50MB -->
+                <maxFileSize>50MB</maxFileSize>
+                <!-- kb, mb, gb -->
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- 보관할 로그 파일의 최대 기록 횟수를 설정 -->
+            <maxHistory>100</maxHistory>
+        </rollingPolicy>
+    </appender>
+
     <logger name="checkDebug" level="DEBUG" additivity="false">
         <!-- AbstractRequester.class 로그는 LOG_INFO appender 만 사용하고, root 로거는 상속 받지 않음(additivity=false) -->
         <!-- private Logger logger = LoggerFactory.getLogger("AbstractRequester.class"); -->
         <appender-ref ref="STDOUT" />
         <appender-ref ref="LOG_DEBUG" />
+        <appender-ref ref="LOG_PACKET" />
     </logger>
     <logger name="checkError" level="ERROR" additivity="false">
         <!-- AbstractRequester.class 로그는 LOG_INFO appender 만 사용하고, root 로거는 상속 받지 않음(additivity=false) -->
@@ -95,6 +114,7 @@
         <appender-ref ref="STDOUT" />
         <appender-ref ref="LOG_ERROR" />
         <appender-ref ref="APP" />
+        <appender-ref ref="LOG_PACKET" />
     </logger>
 
     <root level="INFO">

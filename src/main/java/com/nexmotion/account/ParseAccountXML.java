@@ -37,7 +37,6 @@ public class ParseAccountXML {
             ErrorCode errorcode = new ErrorCode();
 
             String rData = parameter;
-            System.err.println("accountData===>" + rData);
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -47,7 +46,6 @@ public class ParseAccountXML {
             String respCd = rootElement.getElementsByTagName("RESP_CD").item(0).getTextContent();
 
             List<Account> existingData = accountService.selectAccount();
-            System.err.println("list==>" + existingData);
             // 00 : 응답데이터 있고 추가 데이터 없는 경우
             // 01 : 응답 데이터가 아예 없는 경우
             // 02 : 응답데이터 있고 추가 데이터 있는 경우
@@ -102,9 +100,7 @@ public class ParseAccountXML {
             account.setUserstat(userStatCd);
             account.setChgdate(chgdate);
             accountList.add(account);
-            System.err.println("account===>"+account);
         }
-        System.err.println("accountList===>"+accountList);
         return accountList;
     }
 
@@ -135,7 +131,6 @@ public class ParseAccountXML {
             boolean found = false;
             for (Account existingAccount : existingData) {
                 if (newAccount.getUserid().equals(existingAccount.getUserid())) {
-                    System.err.println("겹치는 데이터" + newAccount);
                     accountService.updateAccount(newAccount);
                     if (!(newAccount.getGvofcode().equals(existingAccount.getGvofcode()))) {
                         accountService.updateAuth(newAccount);

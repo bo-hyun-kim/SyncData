@@ -34,7 +34,6 @@ public class ParsePositionXML {
         ErrorCode errorcode = new ErrorCode();
 
         String rData = parameter;
-        System.err.println("positionData===>" + rData);
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -97,7 +96,6 @@ public class ParsePositionXML {
             position.setUseyn(positionUseyn);
 
             positionList.add(position);
-            System.err.println("position===>"+position);
         }
 
         return positionList;
@@ -125,7 +123,6 @@ public class ParsePositionXML {
             boolean found = false;
             for (Position existingPosition : existingData) {
                 if (newPosition.getCnmcode().equals(existingPosition.getCnmcode())) {
-                System.err.println("겹치는 데이터" + newPosition);
                 positionService.updatePosition(newPosition);
                 found = true;
                 break;

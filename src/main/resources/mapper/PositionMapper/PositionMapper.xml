@@ -11,7 +11,7 @@
     <insert id="insertPositionList" parameterType="java.util.List">
         /* positionMapper.insertPositionList */
         INSERT
-          INTO VI_CNM_CD
+          INTO position
               (cnmcode
               ,cnmname
               ,grpcode
@@ -29,7 +29,7 @@
     <insert id="insertPosition" parameterType="com.nexmotion.position.Position">
         /* positionMapper.insertPosition */
         INSERT
-          INTO VI_CNM_CD
+          INTO position
                (cnmcode
                ,cnmname
                ,grpcode
@@ -44,7 +44,7 @@
 
     <update id="updatePosition" parameterType="com.nexmotion.position.Position">
         /* positionMapper.updatePosition */
-        UPDATE VI_CNM_CD
+        UPDATE position
            SET cnmcode = #{cnmcode}
               ,cnmname = #{cnmname}
               ,grpcode = #{grpcode}
@@ -56,12 +56,12 @@
     <select id="selectPosition" resultMap="position">
         /* positionMapper.selectPosition */
         SELECT cnmcode
-          FROM VI_CNM_CD
+          FROM position
     </select>
 
     <delete id="truncatePosition">
         /*positionMapper.truncatePosition Query*/
         TRUNCATE
-           TABLE VI_CNM_CD
+           TABLE position
     </delete>
 </mapper>

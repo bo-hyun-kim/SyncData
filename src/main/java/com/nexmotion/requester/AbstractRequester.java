@@ -27,6 +27,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,8 +140,7 @@ public abstract class AbstractRequester {
 		reqHeader.put("REQST_SYS_CD", reqstSysCd); // 기관아이디
 		reqHeader.put("AUTH_KEY", authKey); // 인증키
 		reqHeader.put("QRY_PUPS", new String(Base64.encodeBase64(qryPups.getBytes())));
-		reqHeader.put("RSPSE_CD", "");
-		System.out.println("reqHeader: "+ reqHeader);
+//		reqHeader.put("RSPSE_CD", "");
 		logger.debug("getHeader() 종료");
 		return reqHeader;
 	}
@@ -152,14 +152,11 @@ public abstract class AbstractRequester {
 		int qryCl = getQryCl();
 		int page = dto.getPage();
 		LocalDateTime chgStartDttm = dto.getChgStartDttm();
-		System.err.println("널 파라미터 확인===>" + chgStartDttm.format(formatter));
 		LocalDateTime chgEndDttm = dto.getChgEndDttm();
-		System.err.println("널 파라미터 확인===>" + chgEndDttm);
 		String fmt = "<REQUEST><HEADER><TLGR_CD>PN02</TLGR_CD><REQ_CL>%d</REQ_CL><QRY_CL>%d</QRY_CL>"
 				+ "<RESP_CD /><REQ_CNT /></HEADER><DATA><PAGE>%d</PAGE><CHG_START_DTTM>%s</CHG_START_DTTM>"
 				+ "<CHG_END_DTTM>%s</CHG_END_DTTM><BLG_AGFC_GVOF_CD>%s</BLG_AGFC_GVOF_CD></DATA></REQUEST>";
 		String xml = String.format(fmt, reqCl, qryCl, page, chgStartDttm.format(formatter), chgEndDttm.format(formatter), blgAgfcGvofCd);
-		System.err.println("xml 확인===>" + xml);
 		logger.debug("getData() 종료");
 		return xml;
 	}
@@ -225,16 +222,14 @@ public abstract class AbstractRequester {
 
 		Map<String, String> reqHeader = getHeader(dto.getQryPups());
 		String reqBody = getData(dto);
-
 		SEEDCryptography seedCrypto = new SEEDCryptography(encryptionKey); // 암호화키
-
+		logger.debug("요청 패킷" + reqHeader + reqBody);
 		byte[] result = request(seedCrypto.encrypt(reqBody.getBytes()), reqHeader);
-		System.out.println("복호화 전 데이터===>" + new String(result, StandardCharsets.UTF_8));
 		byte[] decytedResponse = seedCrypto.decrypt(result);
-		System.out.println("복호화 후 데이터==>" + new String(decytedResponse));
 
 		ret = new String(decytedResponse, StandardCharsets.UTF_8);
 		ret = ret.trim();
+		logger.debug("응답패킷" + ret);
 		logger.debug("send() 종료");
 		return ret;
 	}
@@ -273,7 +268,6 @@ public abstract class AbstractRequester {
 			throw new Exception("Http Error:" + response.getStatusLine().getStatusCode());
 		httpClient.close();
 
-	
 		logger.debug("request() 종료");
 		return result;
 	}
