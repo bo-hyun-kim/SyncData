@@ -24,9 +24,9 @@ public interface AccountMapper {
 
   public void deleteRetireUseridAuth(Account account) throws SQLException;
 
-  public void truncateAccount() throws SQLException;
+  public void deleteAccount() throws SQLException;
 
-  public void truncateUseridAuth() throws SQLException;
+  public void deleteUseridAuth() throws SQLException;
 
   public void updateAuth(Account account) throws Exception;
 }

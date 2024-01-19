@@ -59,9 +59,9 @@
           FROM position
     </select>
 
-    <delete id="truncatePosition">
-        /*positionMapper.truncatePosition Query*/
-        TRUNCATE
-           TABLE position
+    <delete id="deletePosition">
+        /*positionMapper.deletePosition Query*/
+        DELETE
+          FROM position
     </delete>
 </mapper>

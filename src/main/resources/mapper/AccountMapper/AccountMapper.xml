@@ -140,16 +140,16 @@
                               AND chgdate <![CDATA[<=]]> #{retireDate})
     </delete>
 
-    <delete id="truncateAccount">
-        /*AccountMapper.truncateAccount Query*/
-        TRUNCATE
-            TABLE account
+    <delete id="deleteAccount">
+        /*AccountMapper.deleteAccount Query*/
+        DELETE
+          FROM account
     </delete>
 
-    <delete id="truncateUseridAuth">
-        /*AccountMapper.truncateUseridAuth Query*/
-        TRUNCATE
-            TABLE useridauth
+    <delete id="deleteUseridAuth">
+        /*AccountMapper.deleteUseridAuth Query*/
+        DELETE
+          FROM useridauth
     </delete>
 
     <update id="updateAuth" parameterType="com.nexmotion.account.Account">

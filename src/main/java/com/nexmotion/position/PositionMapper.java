@@ -18,6 +18,6 @@ public interface PositionMapper {
 
   public void updatePosition(Position position) throws SQLException;
 
-  public void truncatePosition() throws SQLException;
+  public void deletePosition() throws SQLException;
 
 }

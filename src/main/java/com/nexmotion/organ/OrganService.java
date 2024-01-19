@@ -35,7 +35,7 @@ public class OrganService implements OrganMapper {
   }
 
   @Override
-  public void truncateOragan() throws SQLException {
-    organMapper.truncateOragan();
+  public void deleteOrgan() throws SQLException {
+    organMapper.deleteOrgan();
   }
 }

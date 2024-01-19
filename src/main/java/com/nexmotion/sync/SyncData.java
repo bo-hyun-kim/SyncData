@@ -2,6 +2,9 @@ package com.nexmotion.sync;
 
 import com.nexmotion.account.Account;
 import com.nexmotion.account.AccountService;
+import com.nexmotion.organ.OrganService;
+import com.nexmotion.position.PositionMapper;
+import com.nexmotion.position.PositionService;
 import com.nexmotion.requester.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +36,12 @@ public class SyncData {
     private SyncService syncService;
 
     @Autowired
+    private OrganService organService;
+
+    @Autowired
+    private PositionService positionService;
+
+    @Autowired
     private UserRequester userRequester;
 
     @Autowired
@@ -51,16 +60,20 @@ public class SyncData {
             debugLogger.debug("sync() 시작");
             SyncVO sync = new SyncVO();
             List<SyncVO> dateInfo = syncService.getChgDate();
-            LocalDateTime startDt = dateInfo.get(0).getChgStartDate();
+            LocalDateTime startDt = null;
+
+            if (!dateInfo.isEmpty()) {
+                startDt = dateInfo.get(0).getChgStartDate();
+            }
 
             if (startDt == null) {
                 debugLogger.debug("startDt가 널인 경우 모든 데이터 삭제 후 데이터를 새로 받는다");
                 // 처음 데이터를 가져오는 경우 모든 데이터를 삭제한다
                 // 실제로 지금 계정 테이블이랑 조직 테이블 샘플 데이터가 truncate 되면 안되니까 일단 주석처리 해놓음
-                // accountService.truncateAccount();
-                // organService.truncateOragan();
-                // positionService.truncatePosition();
-                // syncService.truncateUseridAuth();
+                accountService.deleteAccount();
+                organService.deleteOrgan();
+                positionService.deletePosition();
+                accountService.deleteUseridAuth();
                 startDt = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
             }
 

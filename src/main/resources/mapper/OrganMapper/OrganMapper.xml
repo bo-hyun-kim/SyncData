@@ -64,9 +64,9 @@
          WHERE gvofcode = #{gvofcode}
     </update>
 
-    <delete id="truncateOrgan">
-        /*OrganMapper.truncateOrgan Query*/
-        TRUNCATE
-            TABLE organ
+    <delete id="deleteOrgan">
+        /*OrganMapper.deleteOrgan Query*/
+        DELETE
+          FROM organ
     </delete>
 </mapper>

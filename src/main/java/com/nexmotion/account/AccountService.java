@@ -43,13 +43,13 @@ public class AccountService implements AccountMapper {
 	}
 
 	@Override
-	public void truncateAccount() throws SQLException {
-		accountMapper.truncateAccount();
+	public void deleteAccount() throws SQLException {
+		accountMapper.deleteAccount();
 	}
 
 	@Override
-	public void truncateUseridAuth() throws SQLException {
-		accountMapper.truncateUseridAuth();
+	public void deleteUseridAuth() throws SQLException {
+		accountMapper.deleteUseridAuth();
 	}
 
 	@Override

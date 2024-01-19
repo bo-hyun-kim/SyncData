@@ -35,7 +35,7 @@ public class PositionService implements PositionMapper {
   }
 
   @Override
-  public void truncatePosition() throws SQLException {
-    positionMapper.truncatePosition();
+  public void deletePosition() throws SQLException {
+    positionMapper.deletePosition();
   }
 }

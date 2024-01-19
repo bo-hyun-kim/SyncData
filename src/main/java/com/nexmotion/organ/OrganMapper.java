@@ -17,6 +17,6 @@ public interface OrganMapper {
 
   public void updateOrgan(Organ organ) throws SQLException;
 
-  public void truncateOragan() throws SQLException;
+  public void deleteOrgan() throws SQLException;
 
 }

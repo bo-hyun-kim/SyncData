@@ -135,19 +135,19 @@ public abstract class AbstractRequester {
 
 		reqHeader.put("TRNS_ID", getTodayTimeMilli() + "12345");
 		reqHeader.put("TLGR_CD", "PN02");
-		reqHeader.put("REQST_ENC_CD", "UTF-8");
+		//reqHeader.put("REQST_ENC_CD", "UTF-8");
 		reqHeader.put("REQST_DTTM", getTodayTimeMilli());
 		reqHeader.put("REQST_SYS_CD", reqstSysCd); // 기관아이디
 		reqHeader.put("AUTH_KEY", authKey); // 인증키
-		reqHeader.put("QRY_PUPS", new String(Base64.encodeBase64(qryPups.getBytes())));
-//		reqHeader.put("RSPSE_CD", "");
+		reqHeader.put("QRY_PUPS", new String(Base64.encodeBase64("사용자조직정보조회".getBytes())));
+		//reqHeader.put("RSPSE_CD", "");
 		logger.debug("getHeader() 종료");
 		return reqHeader;
 	}
 
 	private String getData(RequestDTO dto) {
 		logger.debug("getData() 시작");
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 		int reqCl = dto.getReqCl();
 		int qryCl = getQryCl();
 		int page = dto.getPage();
@@ -173,8 +173,8 @@ public abstract class AbstractRequester {
 //		initVariable();
 //		System.err.println("시간 파라미터 확인===>"+ startDt + endDt);
 		logger.debug("run() 시작");
-		this.chgStartDttm = endDt;
-		this.chgEndDttm = startDt;
+		this.chgStartDttm = startDt;
+		this.chgEndDttm = endDt;
 		RequestDTO dto = getRequestDTO();
 //		System.err.println("dto확인 ===>"+ dto);
 		String respCd = null;
@@ -225,9 +225,9 @@ public abstract class AbstractRequester {
 		SEEDCryptography seedCrypto = new SEEDCryptography(encryptionKey); // 암호화키
 		logger.debug("요청 패킷" + reqHeader + reqBody);
 		byte[] result = request(seedCrypto.encrypt(reqBody.getBytes()), reqHeader);
-		byte[] decytedResponse = seedCrypto.decrypt(result);
+		byte[] decrytedResponse = seedCrypto.decrypt(result);
 
-		ret = new String(decytedResponse, StandardCharsets.UTF_8);
+		ret = new String(decrytedResponse, StandardCharsets.UTF_8);
 		ret = ret.trim();
 		logger.debug("응답패킷" + ret);
 		logger.debug("send() 종료");
